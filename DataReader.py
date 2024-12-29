@@ -1,4 +1,5 @@
 import json
+import re
 from MessageData import MessageData
 
 def read_telegram_json(file_path):
@@ -12,7 +13,6 @@ def read_telegram_json(file_path):
     except json.JSONDecodeError as e:
         print(f"Error: Failed to decode JSON file. {e}")
         return None
-
 
 def process_chat_data(data):
     if not data or 'chats' not in data or 'list' not in data['chats']:
@@ -32,22 +32,12 @@ def process_chat_data(data):
         
         chat_name = chat['name']
 
-        message_data = MessageData(chat['messages'], chat_name)
+        message_data = MessageData(chat['messages'], chat_name.split()[0])
         stats = message_data.compute_statistics()
 
+        cleaned_name = re.sub(r'[^a-zA-Z0-9]+', ' ', chat_name).strip(' ')
+
         if stats:
-            consolidated_stats[chat_name] = stats
+            consolidated_stats[cleaned_name] = stats
     
     return consolidated_stats
-
-        
-
-if __name__ == "__main__":
-    # Path to the JSON file
-    json_file_path = "data/result.json"
-
-    # Read the JSON file
-    telegram_data = read_telegram_json(json_file_path)
-
-    # Process and print the chat data
-    print(process_chat_data(telegram_data))
