@@ -71,7 +71,8 @@ class MessageData:
 
         earliest_date = self.df['date'].min()
         latest_date = self.df['date'].max()
-        total_days = max((latest_date - earliest_date).days, 1)
+        current_date = pd.to_datetime('now')
+        total_days = max((current_date - earliest_date).days, 1)
 
         if (stats['Message Count']['To'] < 200 or 
             stats['Message Count']['From'] < 200 or 
@@ -82,8 +83,6 @@ class MessageData:
         stats['Daily Avg Message Count'] = {
             key: value / total_days for key, value in stats['Message Count'].items()
         }
-
-        current_date = pd.to_datetime('now')
 
         # Days since last message -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Days since last message'] = (current_date - latest_date).days
@@ -127,9 +126,9 @@ class MessageData:
 
         # Sentiment -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Average Sentiment'] = {
-            "To": self.df.loc[self.df['from'] != self.chat_name, 'Sentiment'].mean(),
-            "From": self.df.loc[self.df['from'] == self.chat_name, 'Sentiment'].mean(),
-            'Total': self.df['Sentiment'].mean()
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Sentiment'].mean() * 100,
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Sentiment'].mean() * 100,
+            'Total': self.df['Sentiment'].mean() * 100
         }
 
         # Response time -------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,7 +141,7 @@ class MessageData:
             "From": self.df.loc[self.df['from'] != self.chat_name, 'Response Time']
         }
 
-        stats['Avg Response Time (Seconds)'] = {
+        stats['Avg Response Time'] = {
             "To": self.df.loc[self.df['from'] == self.chat_name, 'Response Time'].mean(),
             "From": self.df.loc[self.df['from'] != self.chat_name, 'Response Time'].mean()
         }

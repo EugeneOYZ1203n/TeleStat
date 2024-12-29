@@ -22,7 +22,7 @@ class StackedBarPage(tk.Frame):
         toggle_button = ttk.Button(control_frame, text="Switch Alignment", command=self.toggle_alignment)
         toggle_button.pack(side=tk.LEFT, padx=5)
 
-        self.fig, self.ax = plt.subplots(figsize=(8, 6))
+        self.fig, self.ax = plt.subplots(figsize=(16, 9))
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # embedding the figure
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
@@ -43,7 +43,7 @@ class StackedBarPage(tk.Frame):
         self.ax.set_title(self.title)
 
         if alignment == "aligned":
-            bars1 = self.ax.barh(self.categories, self.group1, label='To', color='skyblue')
+            bars1 = self.ax.barh(self.categories, self.group1, label='To', color='tomato')
             bars2 = self.ax.barh(self.categories, self.group2, label='From', left=self.group1, color='orange')
 
             for bar, val in zip(bars1+bars2, self.group1+self.group2):
@@ -53,7 +53,7 @@ class StackedBarPage(tk.Frame):
             group1_left = np.array(self.group1)
             group2_right = np.array(self.group2) 
 
-            bars1 = self.ax.barh(self.categories, -group1_left, label='To', color='skyblue', align='center')
+            bars1 = self.ax.barh(self.categories, -group1_left, label='To', color='tomato', align='center')
             bars2 = self.ax.barh(self.categories, group2_right, label='From', color='orange', align='center')
 
             for bar, val in zip(bars1, self.group1):

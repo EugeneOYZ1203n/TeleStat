@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from display import StackedBarPage
+from display import StackedBarPage, SideBySideBarPage
 
 class MainApp:
     def __init__(self, root, data):
@@ -13,7 +13,13 @@ class MainApp:
 
         self.pages = [
             self.show_message_count,
-            self.show_total_word_count
+            self.show_daily_avg_message_count,
+            self.show_days_since_last_msg,
+            self.show_total_word_count,
+            self.show_avg_word_count,
+            self.show_avg_sentiment,
+            self.show_avg_response_time,
+            self.show_percent_emoji
         ]
         
         # Frame that will hold the pages
@@ -79,6 +85,104 @@ class MainApp:
             'total': list(total_sorted)
         }
         self._show_page(StackedBarPage.StackedBarPage, bar_data, "Total word count")
+
+    def show_daily_avg_message_count(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Daily Avg Message Count']['To'],
+                 self.data[name]['Daily Avg Message Count']['From'],
+                 self.data[name]['Daily Avg Message Count']['Total']))
+        sorted_data = sorted(data, key=lambda x: x[3])
+        names_sorted, to_sorted, from_sorted, total_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(to_sorted),list(from_sorted),list(total_sorted)],
+            'labels': ['to', 'from', 'total']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Daily Avg Messages")
+
+    def show_days_since_last_msg(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Days since last message']))
+        sorted_data = sorted(data, key=lambda x: x[1])
+        names_sorted, data_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(data_sorted)],
+            'labels': ['']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Days since last messaged")
+
+    def show_avg_word_count(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Average Word Count']['To'],
+                 self.data[name]['Average Word Count']['From'],
+                 self.data[name]['Average Word Count']['Total']))
+        sorted_data = sorted(data, key=lambda x: x[3])
+        names_sorted, to_sorted, from_sorted, total_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(to_sorted),list(from_sorted),list(total_sorted)],
+            'labels': ['to', 'from', 'total']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Average Word Count per Message")
+    
+    def show_avg_sentiment(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Average Sentiment']['To'],
+                 self.data[name]['Average Sentiment']['From'],
+                 self.data[name]['Average Sentiment']['Total']))
+        sorted_data = sorted(data, key=lambda x: x[3])
+        names_sorted, to_sorted, from_sorted, total_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(to_sorted),list(from_sorted),list(total_sorted)],
+            'labels': ['to', 'from', 'total']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Average Sentiment (Positivity, 100 vs Negativity, -100)")
+    
+    def show_avg_response_time(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Avg Response Time']['To'],
+                 self.data[name]['Avg Response Time']['From']))
+        sorted_data = sorted(data, key=lambda x: x[2])
+        names_sorted, to_sorted, from_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(to_sorted),list(from_sorted)],
+            'labels': ['to', 'from']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Average response time (Seconds)")
+    
+    def show_percent_emoji(self):
+        data = []
+        for name in self.data.keys():
+            data.append(
+                (name,
+                 self.data[name]['Percentage of Messages with Emojis']['To'],
+                 self.data[name]['Percentage of Messages with Emojis']['From']))
+        sorted_data = sorted(data, key=lambda x: x[2])
+        names_sorted, to_sorted, from_sorted = zip(*sorted_data)
+        bar_data = {
+            'names': list(names_sorted),
+            'groups': [list(to_sorted),list(from_sorted)],
+            'labels': ['to', 'from']
+        }
+        self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Percentage of Messages with Emojis")
 
     def _show_page(self, page_class, *params):
         if self.current_page:
