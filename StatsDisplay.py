@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from display import StackedBarPage, SideBySideBarPage
+from display import StackedBarPage, SideBySideBarPage, RidgelinePlotPage
 
 class MainApp:
     def __init__(self, root, data):
@@ -13,12 +13,17 @@ class MainApp:
 
         self.pages = [
             self.show_message_count,
+            self.show_word_count_to,
+            self.show_word_count_from,
             self.show_daily_avg_message_count,
             self.show_days_since_last_msg,
             self.show_total_word_count,
             self.show_avg_word_count,
             self.show_avg_sentiment,
             self.show_avg_response_time,
+            self.show_response_time_to,
+            self.show_response_time_from,
+            self.show_hours_of_day_active,
             self.show_percent_emoji
         ]
         
@@ -183,6 +188,39 @@ class MainApp:
             'labels': ['to', 'from']
         }
         self._show_page(SideBySideBarPage.SideBySideBarPage, bar_data, "Percentage of Messages with Emojis")
+
+    def show_word_count_to(self):
+        data = {}
+        for name in self.data.keys():
+            data[name] = self.data[name]['Word Count']['To']
+        self._show_page(RidgelinePlotPage.RidgelinePlotPage, data,8, "Word Count distributions (To)")
+
+    def show_word_count_from(self):
+        data = {}
+        for name in self.data.keys():
+            data[name] = self.data[name]['Word Count']['From']
+        self._show_page(RidgelinePlotPage.RidgelinePlotPage, data,8, "Word Count distributions (From)")
+
+    def show_response_time_to(self):
+        data = {}
+        for name in self.data.keys():
+            data[name] = self.data[name]['Response Time']['To']
+            data[name] = data[name][data[name].notna()]
+        self._show_page(RidgelinePlotPage.RidgelinePlotPage, data,15, "Response Time distributions (To)")
+
+    def show_response_time_from(self):
+        data = {}
+        for name in self.data.keys():
+            data[name] = self.data[name]['Response Time']['From']
+            data[name] = data[name][data[name].notna()]
+        self._show_page(RidgelinePlotPage.RidgelinePlotPage, data,15, "Response Time distributions (From)")
+
+    def show_hours_of_day_active(self):
+        data = {}
+        for name in self.data.keys():
+            data[name] = self.data[name]['Hours of Day active']
+        self._show_page(RidgelinePlotPage.RidgelinePlotPage, data,24, "Hours of day active")
+
 
     def _show_page(self, page_class, *params):
         if self.current_page:

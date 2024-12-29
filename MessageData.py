@@ -157,7 +157,7 @@ class MessageData:
         stats['Links'] = np.concatenate(self.df['Links'].values)
 
         # Hours of day active -------------------------------------------------------------------------------------------------------------------------------------------
-        stats['Hours of Day active'] = self.df['date'].dt.hour
+        stats['Hours of Day active'] = self.df.loc[self.df['from'] == self.chat_name, 'date'].dt.hour
 
         return stats
 
