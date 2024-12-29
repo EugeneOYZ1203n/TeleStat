@@ -64,14 +64,19 @@ class MessageData:
 
         # Message Count -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Message Count'] = {
-            "To": self.df[self.df['from'] == self.chat_name].shape[0],
-            "From": self.df[self.df['from'] != self.chat_name].shape[0],
+            "To": self.df[self.df['from'] != self.chat_name].shape[0],
+            "From": self.df[self.df['from'] == self.chat_name].shape[0],
             'Total': self.df.shape[0]
         }
 
         earliest_date = self.df['date'].min()
         latest_date = self.df['date'].max()
         total_days = max((latest_date - earliest_date).days, 1)
+
+        if (stats['Message Count']['To'] < 200 or 
+            stats['Message Count']['From'] < 200 or 
+            stats['Message Count']['Total'] < 500):
+            return None
 
         # Daily Avg Message Count -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Daily Avg Message Count'] = {
@@ -83,27 +88,22 @@ class MessageData:
         # Days since last message -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Days since last message'] = (current_date - latest_date).days
 
-        if (stats['Message Count']['To'] < 50 or 
-            stats['Message Count']['From'] < 50 or 
-            stats['Message Count']['Total'] < 200):
-            return None
-
         # Word Counts -------------------------------------------------------------------------------------------------------------------------------------------
-        stats['Word Count Statistics'] = {
-            "To": self.df.loc[self.df['from'] == self.chat_name, 'Word Count'].sum(),
-            "From": self.df.loc[self.df['from'] != self.chat_name, 'Word Count'].sum(),
+        stats['Total Word Count'] = {
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Word Count'].sum(),
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Word Count'].sum(),
             'Total': self.df['Word Count'].sum()
         }
 
         stats['Average Word Count'] = {
-            "To": self.df.loc[self.df['from'] == self.chat_name, 'Word Count'].mean(),
-            "From": self.df.loc[self.df['from'] != self.chat_name, 'Word Count'].mean(),
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Word Count'].mean(),
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Word Count'].mean(),
             'Total': self.df['Word Count'].mean()
         }
 
         stats['Word Count'] = {
-            "To": self.df.loc[self.df['from'] == self.chat_name, 'Word Count'],
-            "From": self.df.loc[self.df['from'] != self.chat_name, 'Word Count']
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Word Count'],
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Word Count']
         }
 
         full_text = " ".join(self.df['Message Text'])[-1000:]
@@ -127,8 +127,8 @@ class MessageData:
 
         # Sentiment -------------------------------------------------------------------------------------------------------------------------------------------
         stats['Average Sentiment'] = {
-            "To": self.df.loc[self.df['from'] == self.chat_name, 'Sentiment'].mean(),
-            "From": self.df.loc[self.df['from'] != self.chat_name, 'Sentiment'].mean(),
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Sentiment'].mean(),
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Sentiment'].mean(),
             'Total': self.df['Sentiment'].mean()
         }
 
@@ -138,18 +138,18 @@ class MessageData:
         ).dt.total_seconds()
 
         stats['Response Time'] = {
-            "To": self.df.loc[self.df['from'] != self.chat_name, 'Response Time'],
-            "From": self.df.loc[self.df['from'] == self.chat_name, 'Response Time']
+            "To": self.df.loc[self.df['from'] == self.chat_name, 'Response Time'],
+            "From": self.df.loc[self.df['from'] != self.chat_name, 'Response Time']
         }
 
         stats['Avg Response Time (Seconds)'] = {
-            "To": self.df.loc[self.df['from'] != self.chat_name, 'Response Time'].mean(),
-            "From": self.df.loc[self.df['from'] == self.chat_name, 'Response Time'].mean()
+            "To": self.df.loc[self.df['from'] == self.chat_name, 'Response Time'].mean(),
+            "From": self.df.loc[self.df['from'] != self.chat_name, 'Response Time'].mean()
         }
 
         stats['Percentage of Messages with Emojis'] = {
-            "To": self.df.loc[self.df['from'] == self.chat_name, 'Contains Emoji'].mean() * 100,
-            "From": self.df.loc[self.df['from'] != self.chat_name, 'Contains Emoji'].mean() * 100,
+            "To": self.df.loc[self.df['from'] != self.chat_name, 'Contains Emoji'].mean() * 100,
+            "From": self.df.loc[self.df['from'] == self.chat_name, 'Contains Emoji'].mean() * 100,
         }
 
         # Contacts and links -------------------------------------------------------------------------------------------------------------------------------------------
