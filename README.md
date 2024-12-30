@@ -10,7 +10,7 @@ Telestat transforms raw messaging data into visually stunning and insightful cha
 Clone the project
 
 ```bash
-  git clone https://github.com/EugeneOYZ1203n/TelegramDataAnalyzer.git
+  git clone https://github.com/EugeneOYZ1203n/TeleStat.git
 ```
 
 Go to the project directory
@@ -40,11 +40,10 @@ Run the following code in the project directory
 python .\Main.py
 ```
 
+A TKinter window should pop up and you should be able to view the statistics of your chat history
+
+Everything is run locally on your computer
 
 ## Authors
 
 - [@EugeneOYZ1203n](https://github.com/EugeneOYZ1203n)
-
-A TKinter window should pop up and you should be able to view the statistics of your chat history
-
-Everything is run locally on your computer
