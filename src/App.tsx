@@ -10,7 +10,8 @@ function App() {
   const [isWaitingData, setIsWaitingData] = useState<boolean>(true);
 
   const [totalChats, setTotalChats] = useState<number>(0);
-  const [chatProgress, setChatProgress] = useState<number>(1);
+  const [chatProgress, setChatProgress] = useState<number>(0);
+  const [currentChatName, setCurrentChatName] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
 
@@ -26,6 +27,10 @@ function App() {
         setProgress(statusProgress)
       },
       (index) => {
+        setCurrentChatName(
+          index < newData.chats.list.length 
+            ? newData.chats.list[index].name 
+            : "")
         setChatProgress(index)
       }
     ))
@@ -46,11 +51,14 @@ function App() {
       {isWaitingFile 
       ? 
         <Dropzone setParsedJson={handleSetData}/>
-      :
-        <>
-          <LoadingBar message={"Calculating Stats for each Chat"} value={chatProgress} total={totalChats}/>
-          <LoadingBar message={status} value={progress} total={100}/>
-        </>
+      : isWaitingData
+        ?
+          <>
+            <LoadingBar message={`Calculating Stats for ${currentChatName}`} value={chatProgress} total={totalChats}/>
+            <LoadingBar message={status} value={progress} total={100}/>
+          </>
+        : 
+          <p>{JSON.stringify(data)}</p>
       }
     </Box>
   )

@@ -1,5 +1,6 @@
 import { chunkedFunction } from './ChunkedFunctions';
-import { getMessageText } from './GetMessageText';
+import { combineDictionary } from './helper/combineDictionary';
+import { getMessageText } from './helper/GetMessageText';
 
 export const getWordCounts = async (
     data: any,
@@ -37,5 +38,21 @@ export const getWordCounts = async (
 
     const wordCount_total = wordCount_from + wordCount_to
 
-    return [wordCount_from, wordCount_to, wordCount_total];
+    const wordCount_histogram : any = await chunkedFunction(
+        data.messages, {},
+        combineDictionary,
+        (messages) => {
+            let result : any = {}
+            messages.forEach((message: any) => {
+                let key = getMessageText(message).split(' ').length
+                if (key > 100) { key = "100+" }
+                else if (key > 20) { key = "20+" }
+                result[key] = (result[key] || 0) + 1
+            });
+            return result;
+        },
+        (progress) => status_update_func(`Word count histogram`, progress)
+    )
+
+    return [wordCount_from, wordCount_to, wordCount_total, wordCount_histogram];
 };

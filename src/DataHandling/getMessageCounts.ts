@@ -1,4 +1,7 @@
 import { chunkedFunction } from './ChunkedFunctions';
+import { combineDictionary } from './helper/combineDictionary';
+import { getDateString } from './helper/getDateString';
+import { getMessageDate } from './helper/getMessageDate';
 
 export const getMessageCounts = async (
     data: any,
@@ -28,5 +31,19 @@ export const getMessageCounts = async (
 
     const messages_total = messages_to + messages_from;
 
-    return [messages_from, messages_to, messages_total];
+    const messages_daily: any = await chunkedFunction(
+        data.messages, {},
+        combineDictionary,
+        (messages) => {
+            let result : any = {}
+            messages.forEach((message: any) => {
+                const dateString = getDateString(getMessageDate(message))
+                result[dateString] = (result[dateString] || 0) + 1
+            });
+            return result;
+        },
+        (progress) => status_update_func(`Daily messages`, progress)
+    );
+
+    return [messages_from, messages_to, messages_total, messages_daily];
 };

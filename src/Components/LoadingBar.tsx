@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
+import { colors } from "../config";
 
 interface LoadingBarProps {
   message: string;
@@ -13,7 +14,7 @@ const LoadingBar: React.FC<LoadingBarProps> = ({ message, value, total }) => {
 
   return (
     <Box sx={{ width: "100%", my: 3 }}>
-      <Typography variant="h6" color="textSecondary" gutterBottom>
+      <Typography variant="h6" color={colors.white} gutterBottom>
         {`${message}: ${value} / ${total} (${Math.round(percentage*10)/10}%)`}
       </Typography>
 
