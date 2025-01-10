@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Paper, Alert } from "@mui/material";
+import { colors } from "../config";
 
 interface DropZoneProps {
   setParsedJson: React.Dispatch<React.SetStateAction<object | null>>;
@@ -17,10 +18,15 @@ const Dropzone: React.FC<DropZoneProps> = ({ setParsedJson }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const parsedJson = JSON.parse(e.target?.result as string);
-          setParsedJson(parsedJson);
+            const parsedJson = JSON.parse(e.target?.result as string);
+
+            if (!parsedJson.chats || !parsedJson.chats.list) {
+                throw new Error("Invalid JSON format")
+            }
+            
+            setParsedJson(parsedJson);
         } catch (err) {
-          setError("Invalid JSON format");
+            setError("Invalid JSON format");
         }
       };
       reader.readAsText(file);
@@ -37,26 +43,30 @@ const Dropzone: React.FC<DropZoneProps> = ({ setParsedJson }) => {
     <Paper
       elevation={3}
       sx={{
-        border: "2px dashed #90caf9",
-        padding: 3,
+        border: `2px dashed ${colors.white}`,
+        padding: 4,
+        margin: "auto",
+        width: "300px",
+        height: "150px",
         textAlign: "center",
-        cursor: "pointer",
-        backgroundColor: "#e3f2fd",
+        alignContent: "center",
+        verticalAlign: "center",
+        backgroundColor: colors.bg2,
         "&:hover": {
-          backgroundColor: "#bbdefb",
+          backgroundColor: colors.bg1,
         },
       }}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
-      <Typography variant="h6" color="primary">
-        Drag and drop your JSON file here
-      </Typography>
-      {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
+        <Typography variant="h6" color={colors.white}>
+            Drag and drop your JSON file here
+        </Typography>
+        {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+            </Alert>
+        )}
     </Paper>
   );
 };
