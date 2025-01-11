@@ -6,10 +6,11 @@ export const chunkedFunction = (
     initial, 
     accumulator_func, 
     mapping_func, 
-    status_update_func
+    status_update_func,
+    custom_chunk_size = chunkSize
 ) => {
     return new Promise((resolve) => {
-        const chunks = _.chunk(data, chunkSize); // Divide data into chunks
+        const chunks = _.chunk(data, custom_chunk_size); // Divide data into chunks
         let result = initial;
         let currentChunk = 0;
 
