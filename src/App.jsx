@@ -9,9 +9,9 @@ function App() {
   const [isWaitingFile, setIsWaitingFile] = useState(true);
   const [isWaitingData, setIsWaitingData] = useState(true);
 
-  const [totalChats, setTotalChats] = useState(0);
-  const [chatProgress, setChatProgress] = useState(0);
-  const [currentChatName, setCurrentChatName] = useState("");
+  const [totalOverall, setTotalOverall] = useState(0);
+  const [overallProgress, setOverallProgress] = useState(0);
+  const [overallStatus, setOverallStatus] = useState("");
   const [status, setStatus] = useState("");
   const [progress, setProgress] = useState(0);
 
@@ -19,19 +19,16 @@ function App() {
 
   const handleSetData = async (newData) => {
     setIsWaitingFile(false);
-    setTotalChats(newData.chats.list.length)
+    setTotalOverall(newData.chats.list.length + 1) // Extra 1 for managing overall stats
     setData(await calculateStats(
       newData.chats.list, 
       (statusMessage, statusProgress) => {
         setStatus(statusMessage)
         setProgress(statusProgress)
       },
-      (index) => {
-        setCurrentChatName(
-          index < newData.chats.list.length 
-            ? newData.chats.list[index].name 
-            : "")
-        setChatProgress(index)
+      (text, index) => {
+        setOverallStatus(text)
+        setOverallProgress(index)
       }
     ))
     setIsWaitingData(false);
@@ -54,7 +51,7 @@ function App() {
       : isWaitingData
         ?
           <>
-            <LoadingBar message={`Calculating Stats for ${currentChatName}`} value={chatProgress} total={totalChats}/>
+            <LoadingBar message={overallStatus} value={overallProgress} total={totalOverall}/>
             <LoadingBar message={status} value={progress} total={100}/>
           </>
         : 

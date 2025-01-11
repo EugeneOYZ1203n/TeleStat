@@ -1,3 +1,4 @@
+import { calculateMedian } from './helper/calculateMedian';
 import { chunkedFunction } from './ChunkedFunctions';
 import { combineDictionary } from './helper/combineDictionary';
 import { getDifferenceInSeconds } from './helper/getDifferenceInDays';
@@ -78,20 +79,6 @@ export const getResponseTimes = async (
     return [responseCount_from, responseCount_to, avgResponseTime_from, avgResponseTime_to, 
         medianResponseTime_from, medianResponseTime_to, responseTime_from_histogram, responseTime_to_histogram];
 };
-
-const calculateMedian = (arr) => {
-    if (arr.length === 0) return null; // Handle empty array
-    const sorted = [...arr].sort((a, b) => a - b); // Sort array in ascending order
-    const mid = Math.floor(sorted.length / 2);
-  
-    if (sorted.length % 2 === 0) {
-      // If even, return average of two middle values
-      return (sorted[mid - 1] + sorted[mid]) / 2;
-    } else {
-      // If odd, return the middle value
-      return sorted[mid];
-    }
-}
 
 const getResponseTimeCategory = (responseTime) => {
     let key = Math.round(responseTime)

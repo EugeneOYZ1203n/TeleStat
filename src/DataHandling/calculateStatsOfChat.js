@@ -1,6 +1,7 @@
 import { getActivePeriods } from './getActivePeriods';
 import { getCommonWords } from './getCommonWords';
 import { getEmojiReactions } from './getEmojiReactions';
+import { getIndividualChatBadges } from './getIndividualChatBadges';
 import { getMessageCounts } from './getMessageCounts';
 import { getMessageSentiments } from './getMessageSentiments';
 import { getMilestoneMessages } from './getMilestoneMessages';
@@ -64,6 +65,17 @@ export const calculateStatsOfChat = async (
 
     const [responseCount_from, responseCount_to, avgResponseTime_from, avgResponseTime_to, medianResponseTime_from, medianResponseTime_to, responseTime_from_histogram, responseTime_to_histogram] = await getResponseTimes(data, status_update_func);
 
+    const [positiveBadges, negativeBadges, neutralBadges] = getIndividualChatBadges(
+        messages_total, messages_daily,
+        wordCount_from, wordCount_to, 
+        firstDateMessaged, daysBetweenFirstAndLastMessage, daysSinceLastMessaged, 
+        emoji_percent_total,
+        punctuated_percent_total,
+        avg_message_sentiments_from, avg_message_sentiments_to, 
+        hours_active, daysOfWeek_active, 
+        medianResponseTime_from, medianResponseTime_to
+    )
+
     return {
         name: data.name,
         messages_from, messages_to, messages_total, messages_daily,
@@ -81,6 +93,7 @@ export const calculateStatsOfChat = async (
         keywords, common10Abbreviations,
         phoneNumbers, emails, handles, links,
         responseCount_from, responseCount_to, avgResponseTime_from, avgResponseTime_to,
-        medianResponseTime_from, medianResponseTime_to, responseTime_from_histogram, responseTime_to_histogram
+        medianResponseTime_from, medianResponseTime_to, responseTime_from_histogram, responseTime_to_histogram,
+        positiveBadges, negativeBadges, neutralBadges
     };
 };
