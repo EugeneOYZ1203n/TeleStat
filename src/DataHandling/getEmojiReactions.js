@@ -3,25 +3,25 @@ import { containsEmoji } from './helper/containsEmoji';
 import { getMessageText } from './helper/GetMessageText';
 
 export const getEmojiReactions = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
-    const emoji_messages_from: any = await chunkedFunction(
+    const emoji_messages_from = await chunkedFunction(
         data.messages, 0,
         (a, b) => a + b,
         (messages) => {
-            return messages.filter((message: any) => {
+            return messages.filter((message) => {
                 return message.from_id === `user${data.id}` && containsEmoji(getMessageText(message));
             }).length;
         },
         (progress) => status_update_func(`Emoji messages from`, progress)
     );
 
-    const emoji_messages_to: any = await chunkedFunction(
+    const emoji_messages_to = await chunkedFunction(
         data.messages, 0,
         (a, b) => a + b,
         (messages) => {
-            return messages.filter((message: any) => {
+            return messages.filter((message) => {
                 return message.from_id !== `user${data.id}` && containsEmoji(getMessageText(message));
             }).length;
         },

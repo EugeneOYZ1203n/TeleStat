@@ -18,15 +18,12 @@ const funMilestoneNumbers = [69, 111, 123, 420, 666, 777, 888, 1010, 1234, 1337,
 */
 
 export const getMilestoneMessages = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
     const max_index = data.messages.length
 
-    const funMilestoneMessages = funMilestoneNumbers.reduce((
-        acc : { [key: number]: { isFrom: boolean; username: any; date:any; text: any; } }, 
-        el
-    ) => {
+    const funMilestoneMessages = funMilestoneNumbers.reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el-1]
             acc[el] = {
@@ -39,10 +36,7 @@ export const getMilestoneMessages = async (
         return acc
     }, {})
 
-    const roundedMilestoneMessages = generateRoundedMilestones(max_index).reduce((
-        acc : { [key: number]: { isFrom: boolean; username: any; date:any; text: any; } }, 
-        el
-    ) => {
+    const roundedMilestoneMessages = generateRoundedMilestones(max_index).reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el-1]
             acc[el] = {
@@ -55,10 +49,7 @@ export const getMilestoneMessages = async (
         return acc
     }, {})
 
-    const first20Messages = Array(20).fill(0).map((_, i) => i).reduce((
-        acc : { [key: number]: { isFrom: boolean; username: any; text: any; } }, 
-        el
-    ) => {
+    const first20Messages = Array(20).fill(0).map((_, i) => i).reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el]
             acc[el] = {
@@ -87,8 +78,8 @@ export const getMilestoneMessages = async (
     return [funMilestoneMessages, roundedMilestoneMessages, first20Messages, longestMessage]
 };
 
-function generateRoundedMilestones(max: number): number[] {
-    const milestones: number[] = [10,50,100,500];
+const generateRoundedMilestones = (max) => {
+    const milestones = [10,50,100,500];
     let base = 1000; // Start with 10
   
     while (base <= max) {

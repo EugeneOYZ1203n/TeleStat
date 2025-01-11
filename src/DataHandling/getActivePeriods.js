@@ -4,15 +4,15 @@ import { getDayOfWeekString, getHourString, getMonthString } from './helper/getD
 import { getMessageDate } from './helper/getMessageDate';
 
 export const getActivePeriods = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
-    const hours_active: any = await chunkedFunction(
+    const hours_active = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 const key = getHourString(getMessageDate(message))
                 result[key] = (result[key] || 0) + 1
             });
@@ -21,12 +21,12 @@ export const getActivePeriods = async (
         (progress) => status_update_func(`Hours Active`, progress)
     );
 
-    const daysOfWeek_active: any = await chunkedFunction(
+    const daysOfWeek_active = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 const key = getDayOfWeekString(getMessageDate(message))
                 result[key] = (result[key] || 0) + 1
             });
@@ -35,12 +35,12 @@ export const getActivePeriods = async (
         (progress) => status_update_func(`Days Of Week Active`, progress)
     );
 
-    const month_active: any = await chunkedFunction(
+    const month_active = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 const key = getMonthString(getMessageDate(message))
                 result[key] = (result[key] || 0) + 1
             });

@@ -1,5 +1,5 @@
-export const combineDictionary = (a:any, b:any) => {
-    let result : any = {}
+export const combineDictionary = (a, b) => {
+    const result = {}
     for (const key in a) {
         result[key] = (result[key] || 0) + a[key];
     }

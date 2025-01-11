@@ -1,4 +1,4 @@
-export const getDateString = (date : Date) => {
+export const getDateString = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1; // Months are 0-indexed
     const day = date.getDate();
@@ -6,13 +6,13 @@ export const getDateString = (date : Date) => {
     return `${year}-${month}-${day}`;
 }
 
-export const getHourString = (date : Date) => {
+export const getHourString = (date) => {
     const day = date.getHours(); 
 
     return `${day}`;
 }
 
-export const getDayOfWeekString = (date : Date) => {
+export const getDayOfWeekString = (date) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
     const dayIndex = date.getDay(); 
@@ -20,7 +20,7 @@ export const getDayOfWeekString = (date : Date) => {
     return daysOfWeek[dayIndex];
 }
 
-export const getMonthString = (date : Date) => {
+export const getMonthString = (date) => {
     const month = date.getMonth() + 1; // Months are 0-indexed
 
     return `${month}`;

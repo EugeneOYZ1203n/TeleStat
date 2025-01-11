@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { getMessageCounts } from './getMessageCounts';
 import { getWordCounts } from './getWordCounts';
 import { getMessageDate } from './helper/getMessageDate';
@@ -6,15 +5,15 @@ import { getDifferenceInDays } from './helper/getDifferenceInDays';
 import { getEmojiReactions } from './getEmojiReactions';
 import { getMilestoneMessages } from './getMilestoneMessages';
 import { getMessageSentiments } from './getMessageSentiments';
-import { getActivePeriods } from './getActivePeriods';
+import { getActivePeriods } from './getActivePeriods.js';
 import { getCommonWords } from './getCommonWords';
 
 export const calculateStats = async (
-    data : any, 
-    status_update_func: (arg0: string, arg1: number) => void,
-    increment_progress_func: (arg1: number) => void
+    data, 
+    status_update_func,
+    increment_progress_func
 ) => {
-    let individualStats: any[] = []
+    const individualStats = []
     let index = 0;
     
     for (const chat_data of data) {
@@ -31,9 +30,9 @@ export const calculateStats = async (
 }
 
 const calculateStatsOfChat = async (
-    data : any, 
-    status_update_func: (arg0: string, arg1: number) => void,
-    increment_progress_func: () => void
+    data, 
+    status_update_func,
+    increment_progress_func
 ) => {
     await setTimeout(increment_progress_func, 100)
 

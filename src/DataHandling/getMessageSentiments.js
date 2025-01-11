@@ -2,33 +2,33 @@ import { chunkedFunction } from './ChunkedFunctions';
 import { getMessageSentiment } from './helper/getMessageSentiment';
 
 export const getMessageSentiments = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
-    const total_message_sentiments_from: any = await chunkedFunction(
+    const total_message_sentiments_from = await chunkedFunction(
         data.messages, 0,
         (a, b) => a + b,
         (messages) => {
             return messages
-                    .filter((message: any) => {
+                    .filter((message) => {
                         return message.from_id === `user${data.id}`;
                     })
-                    .reduce((acc:any,el) => {
+                    .reduce((acc,el) => {
                         return acc + getMessageSentiment(el)
                     }, 0);
         },
         (progress) => status_update_func(`Sentiment from`, progress)
     );
 
-    const total_message_sentiments_to: any = await chunkedFunction(
+    const total_message_sentiments_to = await chunkedFunction(
         data.messages, 0,
         (a, b) => a + b,
         (messages) => {
             return messages
-                    .filter((message: any) => {
+                    .filter((message) => {
                         return message.from_id !== `user${data.id}`;
                     })
-                    .reduce((acc:any,el) => {
+                    .reduce((acc,el) => {
                         return acc + getMessageSentiment(el)
                     }, 0);
         },

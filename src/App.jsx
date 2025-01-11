@@ -6,18 +6,18 @@ import { Box } from '@mui/material';
 import { calculateStats } from './DataHandling/CalculateStats';
 
 function App() {
-  const [isWaitingFile, setIsWaitingFile] = useState<boolean>(true);
-  const [isWaitingData, setIsWaitingData] = useState<boolean>(true);
+  const [isWaitingFile, setIsWaitingFile] = useState(true);
+  const [isWaitingData, setIsWaitingData] = useState(true);
 
-  const [totalChats, setTotalChats] = useState<number>(0);
-  const [chatProgress, setChatProgress] = useState<number>(0);
-  const [currentChatName, setCurrentChatName] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
-  const [progress, setProgress] = useState<number>(0);
+  const [totalChats, setTotalChats] = useState(0);
+  const [chatProgress, setChatProgress] = useState(0);
+  const [currentChatName, setCurrentChatName] = useState("");
+  const [status, setStatus] = useState("");
+  const [progress, setProgress] = useState(0);
 
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState(null);
 
-  const handleSetData = async (newData : any) => {
+  const handleSetData = async (newData) => {
     setIsWaitingFile(false);
     setTotalChats(newData.chats.list.length)
     setData(await calculateStats(

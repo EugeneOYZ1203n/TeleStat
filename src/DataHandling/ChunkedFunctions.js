@@ -2,11 +2,11 @@ import _ from 'lodash';
 import { chunkSize } from '../config';
 
 export const chunkedFunction = (
-    data : any, 
-    initial: any, 
-    accumulator_func: (arg0: any, arg1: any) => any, 
-    mapping_func: (arg0: unknown[]) => any, 
-    status_update_func: (arg0: number) => void
+    data, 
+    initial, 
+    accumulator_func, 
+    mapping_func, 
+    status_update_func
 ) => {
     return new Promise((resolve) => {
         const chunks = _.chunk(data, chunkSize); // Divide data into chunks

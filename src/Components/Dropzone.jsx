@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography, Paper, Alert } from "@mui/material";
+import { Typography, Paper, Alert } from "@mui/material";
 import { colors } from "../config";
 
-interface DropZoneProps {
-  setParsedJson: React.Dispatch<React.SetStateAction<object | null>>;
-}
+const Dropzone = ({ setParsedJson }) => {
+  const [error, setError] = useState(null);
 
-const Dropzone: React.FC<DropZoneProps> = ({ setParsedJson }) => {
-  const [error, setError] = useState<string | null>(null);
-
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event) => {
     event.preventDefault();
     setError(null);
 
@@ -18,7 +14,7 @@ const Dropzone: React.FC<DropZoneProps> = ({ setParsedJson }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-            const parsedJson = JSON.parse(e.target?.result as string);
+            const parsedJson = JSON.parse(e.target?.result);
 
             if (!parsedJson.chats || !parsedJson.chats.list) {
                 throw new Error("Invalid JSON format")
@@ -35,7 +31,7 @@ const Dropzone: React.FC<DropZoneProps> = ({ setParsedJson }) => {
     }
   };
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event) => {
     event.preventDefault();
   };
 

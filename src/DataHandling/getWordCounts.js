@@ -3,15 +3,15 @@ import { combineDictionary } from './helper/combineDictionary';
 import { getMessageText } from './helper/GetMessageText';
 
 export const getWordCounts = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
-    const wordCount_from : any = await chunkedFunction(
+    const wordCount_from = await chunkedFunction(
         data.messages, 0,
         (a,b) => a + b,
         (messages) => {
             return messages
-                        .filter((message : any) => {
+                        .filter((message) => {
                             return message.from_id === `user${data.id}`
                         })
                         .reduce((acc,el) => {
@@ -21,12 +21,12 @@ export const getWordCounts = async (
         (progress) => status_update_func(`Word count from`, progress)
     )
 
-    const wordCount_to : any = await chunkedFunction(
+    const wordCount_to = await chunkedFunction(
         data.messages, 0,
         (a,b) => a + b,
         (messages) => {
             return messages
-                        .filter((message : any) => {
+                        .filter((message) => {
                             return message.from_id !== `user${data.id}`
                         })
                         .reduce((acc,el) => {
@@ -38,12 +38,12 @@ export const getWordCounts = async (
 
     const wordCount_total = wordCount_from + wordCount_to
 
-    const wordCount_histogram : any = await chunkedFunction(
+    const wordCount_histogram = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 let key = getMessageText(message).split(' ').length
                 if (key > 100) { key = "100+" }
                 else if (key > 20) { key = "20+" }

@@ -15,19 +15,19 @@ const abbreviations = [
 ];
 
 export const getCommonWords = async (
-    data: any,
-    status_update_func: (arg0: string, arg1: number) => void
+    data,
+    status_update_func
 ) => {
 
-    const word_counts : any = await chunkedFunction(
+    const word_counts = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 cleanText(
                     getMessageText(message)
-                ).forEach((word:any)=>{
+                ).forEach((word)=>{
                     result[word] = (result[word] || 0) + 1
                 })
             });
@@ -36,19 +36,19 @@ export const getCommonWords = async (
         (progress) => status_update_func(`Common Words`, progress)
     )
 
-    const abbreviation_counts : any = await chunkedFunction(
+    const abbreviation_counts = await chunkedFunction(
         data.messages, {},
         combineDictionary,
         (messages) => {
-            let result : any = {}
-            messages.forEach((message: any) => {
+            const result = {}
+            messages.forEach((message) => {
                 getMessageText(message)
                     .toLowerCase()
                     .split(' ')
-                    .filter((word:any) => {
+                    .filter((word) => {
                         return abbreviations.includes(word);
                     })
-                    .forEach((word:any)=>{
+                    .forEach((word)=>{
                     result[word] = (result[word] || 0) + 1
                 })
             });
@@ -58,19 +58,19 @@ export const getCommonWords = async (
     )
 
     const common30Words = Array.from(Object.entries(word_counts))
-                                    .sort((a:any, b:any) => b[1] - a[1])
+                                    .sort((a, b) => b[1] - a[1])
                                     .slice(0,29) // Sort by frequency
-                                    .map((entry:any) => entry[0]);
+                                    .map((entry) => entry[0]);
     
     const common10Abbreviations = Array.from(Object.entries(abbreviation_counts))
-                                    .sort((a:any, b:any) => b[1] - a[1])
+                                    .sort((a, b) => b[1] - a[1])
                                     .slice(0,9) // Sort by frequency
-                                    .map((entry:any) => entry[0]);
+                                    .map((entry) => entry[0]);
 
     return [common30Words, common10Abbreviations];
 };
 
-const cleanText = (text:any) => {
+const cleanText = (text) => {
     return removeStopwords(
         text.toLowerCase().split(' ')
     ).filter(word => {
