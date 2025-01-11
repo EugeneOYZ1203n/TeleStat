@@ -1,49 +1,50 @@
+# React + TypeScript + Vite
 
-# TeleStat
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Telestat transforms raw messaging data into visually stunning and insightful charts, allowing you to discover hidden patterns, track engagement, and gain a deeper understanding of your Telegram interactions in a fun and informative way.
+Currently, two official plugins are available:
 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Run Locally
+## Expanding the ESLint configuration
 
-### Cloning the Repo
-Clone the project
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-```bash
-  git clone https://github.com/EugeneOYZ1203n/TeleStat.git
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-Go to the project directory
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```bash
-  cd my-project
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
 ```
-
-### Getting the telegram data
-Open Telegram **Desktop**, navigate to Sidebar (3 bars icon) > Settings > Advanced > Export Telegram data
-
-Select under Chat export settings > Personal chats
-
-Unselect every other option
-
-Choose the download path and Machine readable JSON
-
-There should be a folder containing a result.json file at the download path
-
-Move that result.json file into the repo, such that its relative path is data/result.json
-
-### Run the Code
-
-Run the following code in the project directory
-
-```bash
-python .\Main.py
-```
-
-A TKinter window should pop up and you should be able to view the statistics of your chat history
-
-Everything is run locally on your computer
-
-## Authors
-
-- [@EugeneOYZ1203n](https://github.com/EugeneOYZ1203n)

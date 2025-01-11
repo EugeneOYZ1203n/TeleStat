@@ -1,0 +1,64 @@
+import { useState } from 'react'
+import './App.css'
+import Dropzone from './Components/Dropzone'
+import LoadingBar from './Components/LoadingBar';
+import { Box } from '@mui/material';
+import { calculateStats } from './DataHandling/CalculateStats';
+
+function App() {
+  const [isWaitingFile, setIsWaitingFile] = useState(true);
+  const [isWaitingData, setIsWaitingData] = useState(true);
+
+  const [totalOverall, setTotalOverall] = useState(0);
+  const [overallProgress, setOverallProgress] = useState(0);
+  const [overallStatus, setOverallStatus] = useState("");
+  const [status, setStatus] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const [data, setData] = useState(null);
+
+  const handleSetData = async (newData) => {
+    setIsWaitingFile(false);
+    setTotalOverall(newData.chats.list.length + 1) // Extra 1 for managing overall stats
+    setData(await calculateStats(
+      newData.chats.list, 
+      (statusMessage, statusProgress) => {
+        setStatus(statusMessage)
+        setProgress(statusProgress)
+      },
+      (text, index) => {
+        setOverallStatus(text)
+        setOverallProgress(index)
+      }
+    ))
+    setIsWaitingData(false);
+  }
+
+  return (
+    <Box 
+      sx={{
+        padding: 8,
+        margin: "auto",
+        width: "80vw",
+        height: "80vh",
+        textAlign: "center",
+        alignContent: "center",
+        verticalAlign: "center",
+      }}>
+      {isWaitingFile 
+      ? 
+        <Dropzone setParsedJson={handleSetData}/>
+      : isWaitingData
+        ?
+          <>
+            <LoadingBar message={overallStatus} value={overallProgress} total={totalOverall}/>
+            <LoadingBar message={status} value={progress} total={100}/>
+          </>
+        : 
+          <p>{JSON.stringify(data)}</p>
+      }
+    </Box>
+  )
+}
+
+export default App
