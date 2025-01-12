@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { colors } from "../../config";
 
 // Registering the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -22,9 +23,8 @@ const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true
       {
         label: "Frequency", // Dataset label
         data: values, // Values for the bars (e.g., frequency counts)
-        backgroundColor: "#36A2EB", // Color of the bars
-        borderColor: "#1F78D1", // Border color of bars
-        borderWidth: 1, // Border width of bars
+        backgroundColor: colors.primary,
+        borderWidth: 0, // Border width of bars
       },
     ],
   };
@@ -70,11 +70,11 @@ const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        maxHeight: "60vh",
+        minHeight: "40vh"
       }}
     >
-      <Box sx={{ width: "100%", maxWidth: 600 }}>
-        <Chart type="bar" data={chartData} options={options} />
-      </Box>
+      <Chart type="bar" data={chartData} options={options} />
     </Box>
   );
 };

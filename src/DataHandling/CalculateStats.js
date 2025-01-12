@@ -12,7 +12,7 @@ export const calculateStats = async (
     let index = 0;
     
     for (const chat_data of data) {
-        if (index > 0) {
+        if (index > 2) {
             break
         }
         const val = await calculateStatsOfChat(

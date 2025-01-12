@@ -13,32 +13,28 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ title, label, data, legendPosition='top', tooltips=true, legends=true, width, height}) => {
+const PieChart = ({ 
+  title, 
+  label, 
+  data, 
+  legends=true, legendPosition='top', 
+  tooltips=true, 
+  fontSize = 18,
+  width = "200px"
+}) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-      }}
-    >
-      {/* Pie Chart */}
       <Box
         sx={{
           width: width, // Adjust chart size
-          height: height,
         }}
       >
         {title && (
-        <Typography variant="h6" sx={{ mb: 2 }}>
-          {title}
-        </Typography>
-      )}
+          <Typography variant="h6" sx={{ mb: 2, fontSize: fontSize }}>
+            {title}
+          </Typography>
+        )}
         <Pie data={generatePieChartData(data, label)} options={generatePieChartOptions(legends, legendPosition, tooltips)} />
       </Box>
-    </Box>
   );
 };
 
