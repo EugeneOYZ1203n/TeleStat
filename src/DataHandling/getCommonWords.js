@@ -15,7 +15,7 @@ const extraStopwords = [
     "walk","win","offer","remember","love","consider","appear","buy","wait","serve","die","send",
     "expect","build","stay","fall","cut","reach","kill","remain","suggest","raise","pass","sell","require",
     "report","decide","pull","return","explain","hope","develop","carry","break","receive","agree","support",
-    "hit","produce","eat","cover","catch","draw","choose", "talk"
+    "hit","produce","eat","cover","catch","draw","choose", "talk", "yeah", "shit"
 ]
 
 const abbreviations = [
@@ -23,7 +23,7 @@ const abbreviations = [
     "gtg", "asl", "omw", "lmfao", "ppl", "cya", "hmu", "wyd", "lmk", "fomo", "swag", "ftw", "aights",
     "g2g", "bffl", "jk", "fyi", "wbu", "tmi", "jk", "xoxo", "smfh", "gtfo","imma","ill","yall",
     "wth", "ig", "dm", "bruh", "bae", "fam", "srsly", "prob", "uhrm", "uh", "hrm", "uhh",
-    "mfw", "slay", "srs", "mvp", "hbd", "sus", "fkin", "nope",
+    "mfw", "slay", "srs", "mvp", "hbd", "sus", "fkin", "nope", "wanna", "gotta", "sorta",
     "lit", "clout", "vibe", "simp", "noob", "lit", "yas", "skrrt", "yeet", "sksksk", 
     "fr", "cap", "bet", "ily", "ilysm", "wtf", 
     "omfg", "yo", "gdi", "ok", "k", "okie", "bc", "gg", "ggwp", "imho"

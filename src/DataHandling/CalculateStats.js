@@ -12,7 +12,7 @@ export const calculateStats = async (
     let index = 0;
     
     for (const chat_data of data) {
-        if (index > 1) {
+        if (index > 0) {
             break
         }
         const val = await calculateStatsOfChat(
@@ -30,7 +30,7 @@ export const calculateStats = async (
     const avgWordCountPerMessageSent = wordCount_sent/messages_sent
     const firstDateMessaged = individualStats.reduce((acc,el) => acc < el.firstDateMessaged 
         ? acc : el.firstDateMessaged, individualStats[0].firstDateMessaged)
-    const lastDateMessaged = individualStats.reduce((acc,el) => acc < el.lastDateMessaged 
+    const lastDateMessaged = individualStats.reduce((acc,el) => acc > el.lastDateMessaged 
         ? acc : el.lastDateMessaged, individualStats[0].lastDateMessaged)
     const daysBetweenFirstAndLastMessage = getDifferenceInDays(firstDateMessaged, lastDateMessaged)
     const avgDailyMessages = (messages_sent + messages_received) / daysBetweenFirstAndLastMessage
