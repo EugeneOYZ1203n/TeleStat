@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import Dropzone from './DataHandling/Components/Dropzone'
+import { useState } from 'react';
+import './App.css';
+import Dropzone from './DataHandling/Components/Dropzone';
 import LoadingBar from './DataHandling/Components/LoadingBar';
+import UsageInfo from './Components/UsageInfo';
 import { Box } from '@mui/material';
 import { calculateStats } from './DataHandling/CalculateStats';
 import DisplayData from './GraphingAndDisplay/MainComponents/DisplayData';
@@ -50,7 +51,10 @@ function App() {
       }}>
       {isWaitingFile 
       ? 
+        <>
+        <UsageInfo/>
         <Dropzone setParsedJson={handleSetData}/>
+        </>
       : isWaitingData
         ?
           <>
