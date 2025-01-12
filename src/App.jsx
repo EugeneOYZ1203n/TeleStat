@@ -2,12 +2,10 @@ import { useState } from 'react';
 import './App.css';
 import Dropzone from './DataHandling/Components/Dropzone';
 import LoadingBar from './DataHandling/Components/LoadingBar';
-import UsageInfo from './Components/UsageInfo';
+import UsageInfo from './DataHandling/Components/UsageInfo';
 import { Box } from '@mui/material';
 import { calculateStats } from './DataHandling/CalculateStats';
 import DisplayData from './GraphingAndDisplay/MainComponents/DisplayData';
-import BigNumber from './GraphingAndDisplay/SubComponents/BigNumber';
-import PieChart from './GraphingAndDisplay/SubComponents/PieChart';
 
 function App() {
   const [isWaitingFile, setIsWaitingFile] = useState(true);
@@ -43,8 +41,8 @@ function App() {
       sx={{
         padding: 4,
         margin: "auto",
+        paddingBottom: 12,
         width: "80vw",
-        height: "80vh",
         textAlign: "center",
         alignContent: "center",
         verticalAlign: "center",
@@ -52,8 +50,8 @@ function App() {
       {isWaitingFile 
       ? 
         <>
-        <UsageInfo/>
-        <Dropzone setParsedJson={handleSetData}/>
+          <UsageInfo/>
+          <Dropzone setParsedJson={handleSetData}/>
         </>
       : isWaitingData
         ?

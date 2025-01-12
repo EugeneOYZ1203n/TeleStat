@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Typography, Paper, Alert } from "@mui/material";
 import { colors } from "../../config";
-import docsvg from "../assets/icons8-document.svg";
+import docsvg from "../../assets/icons8-document.svg";
 
 const Dropzone = ({ setParsedJson }) => {
   const [error, setError] = useState(null);

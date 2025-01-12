@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography, Paper, Box } from "@mui/material";
-import { colors } from "../config";
-import image1 from "../assets/Instructions1.png";
-import image2 from "../assets/Instructions2.png";
+import { colors } from "../../config";
+import image1 from "../../assets/Instructions1.png";
+import image2 from "../../assets/Instructions2.png";
 
 const UsageInfo = ({}) => {
   return (
