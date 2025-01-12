@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Paper, Alert } from "@mui/material";
-import { colors } from "../config";
+import { colors } from "../../config";
 
 const Dropzone = ({ setParsedJson }) => {
   const [error, setError] = useState(null);

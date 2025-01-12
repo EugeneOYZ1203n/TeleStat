@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
-import { colors } from "../config";
+import { colors } from "../../config";
 
 const LoadingBar = ({ message, value, total }) => {
   const percentage = Math.min((value / total) * 100, 100); // Cap percentage at 100%
