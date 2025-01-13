@@ -1,19 +1,8 @@
 import React, { useState } from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { colors } from "../../config";
 
-// Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
   const [selectedTypes, setSelectedTypes] = useState(

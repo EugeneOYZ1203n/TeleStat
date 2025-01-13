@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import './GraphingAndDisplay/helper/ChartSetup'
 import Dropzone from './DataHandling/Components/Dropzone';
 import LoadingBar from './DataHandling/Components/LoadingBar';
 import UsageInfo from './DataHandling/Components/UsageInfo';

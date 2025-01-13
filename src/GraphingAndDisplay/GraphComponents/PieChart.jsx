@@ -3,15 +3,6 @@ import { Box, Typography } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { generatePieChartData, generatePieChartOptions } from '../helper/PieChartHelpers';
 
-// Required for Chart.js to work properly
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ 
   title, 
