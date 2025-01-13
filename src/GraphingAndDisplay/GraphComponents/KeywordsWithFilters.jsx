@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Box, FormControlLabel, Typography, RadioGroup, Radio } from "@mui/material";
+import { Box, FormControlLabel, Typography, RadioGroup, Radio, Chip } from "@mui/material";
 import { colors } from "../../config";
-import HistogramChart from "./HistogramChart";
 
-const HistogramChartWithFilters = ({ title, fontSize=18, initialData }) => {
+
+const KeywordsWithFilters = ({ title, fontSize=18, initialData }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     Object.keys(initialData)[0] // Initially, all categories are selected
   );
@@ -28,10 +28,34 @@ const HistogramChartWithFilters = ({ title, fontSize=18, initialData }) => {
             {title}
           </Typography>
       )}
-      <HistogramChart 
-        labels={initialData[selectedCategory].labels}
-        values={initialData[selectedCategory].values}
-      />
+      <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 1, // Space between badges
+        p: 2,  // Padding around the container
+      }}
+    >
+      {initialData[selectedCategory].length == 0 
+        ? (<Typography variant="h6" sx={{ mb: 2, color: colors.primary}}>
+            None
+          </Typography>)
+        : (initialData[selectedCategory].map((item, index) => (
+            <Chip
+              key={index}
+              label={item}
+              sx={{
+                color: colors.black,
+                bgcolor: colors.primary,
+                fontSize: "12px",
+                padding: "4px 8px",
+                borderRadius: "16px", // Makes it look like a bubble
+              }}
+            />
+          )))
+      }
+      
+    </Box>
 
       <Box sx={{alignContent: "center", display:"flex", flexDirection:"row"}}>
       <RadioGroup value={selectedCategory} onChange={handleCategoryChange} sx={{alignContent: "center", display:"flex", flexDirection:"row"}}>
@@ -58,4 +82,4 @@ const HistogramChartWithFilters = ({ title, fontSize=18, initialData }) => {
   );
 };
 
-export default HistogramChartWithFilters;
+export default KeywordsWithFilters;

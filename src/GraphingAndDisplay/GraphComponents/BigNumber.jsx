@@ -16,7 +16,7 @@ const BigNumber = ({
 }) => {
   const digits = 8
 
-  let numberString = (
+  const numberString = (
     (number instanceof Date)
       ? formatDateToDDMMYY(number)
     : (number > createNumberWithNines(digits))

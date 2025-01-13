@@ -26,7 +26,7 @@ export const getMilestoneMessages = async (
     const funMilestoneMessages = funMilestoneNumbers.reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el-1]
-            acc[el] = {
+            acc[`Msg No. ${el}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
                 date: getMessageDate(message),
@@ -39,7 +39,7 @@ export const getMilestoneMessages = async (
     const roundedMilestoneMessages = generateRoundedMilestones(max_index).reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el-1]
-            acc[el] = {
+            acc[`Msg No. ${el}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
                 date: getMessageDate(message),
@@ -52,28 +52,36 @@ export const getMilestoneMessages = async (
     const first20Messages = Array(20).fill(0).map((_, i) => i).reduce((acc, el) => {
         if (el <= max_index){
             const message = data.messages[el]
-            acc[el] = {
+            acc[`Msg No. ${el+1}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
+                date: getMessageDate(message),
                 text: getMessageText(message)
             }
         }
         return acc
     }, {});
 
-    const longestMessage = await chunkedFunction(
-        data.messages, 0,
-        (a, b) => a.length > b.length ? a : b,
+    const longestMessage = {"Longest": await chunkedFunction(
+        data.messages, {text: ""},
+        (a, b) => a.text.length > b.text.length ? a : b,
         (messages) => {
             return messages
-                    .map((message) => getMessageText(message))
+                    .map((message) => {
+                        return {
+                            isFrom: message.from_id === `user${data.id}`,
+                            username: message.from,
+                            date: getMessageDate(message),
+                            text: getMessageText(message)
+                        }
+                    })
                     .reduce((longest, current) => 
-                        current.length > longest.length ? current : longest, 
-                        ""
+                        current.text.length > longest.text.length ? current : longest, 
+                        {text: ""}
                     );
         },
         (progress) => status_update_func(`Longest message`, progress)
-    );
+    )};
 
     return [funMilestoneMessages, roundedMilestoneMessages, first20Messages, longestMessage]
 };

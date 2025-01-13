@@ -2,12 +2,13 @@ import React from 'react'
 import BarChartWithFilters from '../GraphComponents/BarChartWithFilters'
 import { Box } from '@mui/material'
 import { colors } from '../../config'
-import { combineDictionary, combineDictionaryNoDuplicates } from '../../DataHandling/helper/combineDictionary'
-import HistogramChart from '../GraphComponents/HistogramChart'
+import { combineDictionaryNoDuplicates } from '../../DataHandling/helper/combineDictionary'
 import HistogramChartWithFilters from '../GraphComponents/HistogramChartWithFilters'
 import { getDateRangeArray } from '../helper/DateFormatting'
 import { getDateString } from '../../DataHandling/helper/getDateString'
 import { daysOfWeek_active_labels, hours_active_labels, months_active_labels } from '../helper/DataLabels'
+import KeywordsWithFilters from '../GraphComponents/KeywordsWithFilters'
+import MessageDisplayWithFilter from '../GraphComponents/MessageDisplayWithFilters'
 
 const ChatList = ({data}) => {
   const message_count_data = {
@@ -247,6 +248,69 @@ const ChatList = ({data}) => {
     }
   }).reduce(combineDictionaryNoDuplicates)
 
+  const keywords_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.keywords
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const commonAbbreviations_data = data.chats.map((el)=>{
+    return {
+      [el.name] : {
+        labels: el.common10Abbreviations.map((a)=>a[0]),
+        values: el.common10Abbreviations.map((a)=>a[1])
+      }
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const phoneNumbers_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.phoneNumbers
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const emails_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.emails
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const handles_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.handles
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const links_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.links
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const first20Message_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.first20Messages
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const roundedMilestoneMessages_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.roundedMilestoneMessages
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const funMilestoneMessages_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.funMilestoneMessages
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
+  const longestMessage_data = data.chats.map((el)=>{
+    return {
+      [el.name] : el.longestMessage
+    }
+  }).reduce(combineDictionaryNoDuplicates)
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, rowGap: 4, p: 4, bgcolor: colors.black }}>
       <BarChartWithFilters 
@@ -320,6 +384,46 @@ const ChatList = ({data}) => {
       <HistogramChartWithFilters
         title={"Response Time Dist. To"}
         initialData={response_time_to_histogram_data}
+      />
+      <KeywordsWithFilters
+        title={"Keywords"}
+        initialData={keywords_data}
+      />
+      <HistogramChartWithFilters
+        title={"Common Abbreviations"}
+        initialData={commonAbbreviations_data}
+      />
+      <KeywordsWithFilters
+        title={"Phone Numbers Shared"}
+        initialData={phoneNumbers_data}
+      />
+      <KeywordsWithFilters
+        title={"Emails Shared"}
+        initialData={emails_data}
+      />
+      <KeywordsWithFilters
+        title={"Handles Shared"}
+        initialData={handles_data}
+      />
+      <KeywordsWithFilters
+        title={"Links Shared"}
+        initialData={links_data}
+      />
+      <MessageDisplayWithFilter
+        title={"First 20 Messages"}
+        initialData={first20Message_data}
+      />
+      <MessageDisplayWithFilter
+        title={"Milestone Messages"}
+        initialData={roundedMilestoneMessages_data}
+      />
+      <MessageDisplayWithFilter
+        title={"Fun Message numbers"}
+        initialData={funMilestoneMessages_data}
+      />
+      <MessageDisplayWithFilter
+        title={"Longest Message"}
+        initialData={longestMessage_data}
       />
     </Box>
   )

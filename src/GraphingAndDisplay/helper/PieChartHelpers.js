@@ -49,7 +49,7 @@ function generatePieChartColors(labelCount) {
   
   for (let i = 0; i < labelCount; i++) {
     const baseIndex = i % 3; // Cycle through the 3 base colors
-    let color = baseColors[baseIndex]; // Convert base color to HSL
+    const color = baseColors[baseIndex]; // Convert base color to HSL
 
     if (i >= 3) {
       colorShades.push(mutateHexColor(color, 60));

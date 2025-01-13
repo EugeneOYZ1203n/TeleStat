@@ -1,8 +1,5 @@
 import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
 import { extractEmails, extractLinks, extractPhoneNumbers, extractSocialMediaHandles } from './helper/extractPhonesAndLinks';
-import { getDateString } from './helper/getDateString';
-import { getMessageDate } from './helper/getMessageDate';
 import { getMessageText } from './helper/GetMessageText';
 
 export const getPhonesAndLinks = async (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Button, TextField, Typography, Collapse } from "@mui/material";
+import React from "react";
+import { Box, TextField, Typography } from "@mui/material";
 import { colors } from "../../config";
 
 const OptionsTab = ({options, setOptions}) => {

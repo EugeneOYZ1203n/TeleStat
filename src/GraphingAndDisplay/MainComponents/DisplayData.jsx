@@ -1,5 +1,4 @@
 import React from 'react'
-import { colors } from '../../config'
 import { Box } from "@mui/material";
 import Overview from './Overview'
 import ChatData from './ChatData'

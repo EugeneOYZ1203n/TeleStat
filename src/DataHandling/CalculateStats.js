@@ -13,7 +13,6 @@ export const calculateStats = async (
     let index = 0;
 
     const sorted_data = data.toSorted((a,b) => b.messages.length - a.messages.length).slice(0,numChats)
-    console.log(sorted_data)
     
     for (const chat_data of sorted_data) {
         const val = await calculateStatsOfChat(

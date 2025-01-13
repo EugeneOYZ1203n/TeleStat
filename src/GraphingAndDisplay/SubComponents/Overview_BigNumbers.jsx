@@ -1,7 +1,6 @@
 import React from 'react'
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import BigNumber from '../GraphComponents/BigNumber'
-import { formatDateToDDMMYY } from '../helper/DateFormatting';
 
 const Overview_BigNumbers = ({data}) => {
     const bigNumbers = [
