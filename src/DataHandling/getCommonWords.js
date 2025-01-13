@@ -1,7 +1,7 @@
+import { ldaFunc } from "./helper/lda";
 import { chunkedFunction } from "./ChunkedFunctions";
 import { combineDictionary } from "./helper/combineDictionary";
 import { getMessageText } from "./helper/GetMessageText";
-import * as lda from 'lda'; //Old library, requires special import
 
 const extraStopwords = [
     "just","want","think","damn","need","when","time","first","back","maybe","going","nice",
@@ -37,7 +37,7 @@ export const getCommonWords = async (
         data.messages, [],
         (a,b) => a.concat(b),
         (messages) => {
-            return lda.default(
+            return ldaFunc(
                 messages.map((message) => {
                     return cleanText(
                         getMessageText(message)
