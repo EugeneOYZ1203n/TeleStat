@@ -78,8 +78,6 @@ const HistogramChart = ({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        maxHeight: "60vh",
-        minHeight: "40vh"
       }}
     >
       {title && (

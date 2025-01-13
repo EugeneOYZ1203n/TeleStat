@@ -2,8 +2,7 @@ import React from 'react'
 import { colors } from '../../config'
 import { Box } from "@mui/material";
 import Overview from './Overview'
-import ChatList from './ChatList'
-import Sidebar from './Sidebar';
+import ChatData from './ChatData'
 
 const DisplayData = ({data}) => {
   return (
@@ -19,29 +18,11 @@ const DisplayData = ({data}) => {
 
       <Box
         sx={{
-          display: 'flex',
-          flex: 1, // Takes remaining vertical space
           width: '100%',
+          padding: 2
         }}
       >
-
-        <Box
-          sx={{
-            flex: 1,
-            padding: 2
-          }}
-        >
-          <ChatList/>
-        </Box>
-
-        <Box
-          sx={{
-            width: '100px', // Fixed width
-            padding: 2,
-          }}
-        >
-          <Sidebar/>
-        </Box>
+        <ChatData data = {data}/>
       </Box>
     </Box>
   )

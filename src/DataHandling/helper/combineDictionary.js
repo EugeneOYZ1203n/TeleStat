@@ -8,3 +8,14 @@ export const combineDictionary = (a, b) => {
     }
     return result;
 }
+
+export const combineDictionaryNoDuplicates = (a,b) => {
+    const result = {}
+    for (const key in a) {
+        result[key] = a[key]
+    }
+    for (const key in b) {
+        result[key] = b[key]
+    }
+    return result
+}

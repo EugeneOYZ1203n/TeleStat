@@ -9,3 +9,18 @@ export function formatDateToDDMMYY(date) {
   
     return `${day}/${month}/${year}`;
   }
+
+export function getDateRangeArray(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const dateArray = [];
+  
+    while (start <= end) {
+      // Push a copy of the current date
+      dateArray.push(new Date(start));
+      // Move to the next day
+      start.setDate(start.getDate() + 1);
+    }
+  
+    return dateArray;
+  }

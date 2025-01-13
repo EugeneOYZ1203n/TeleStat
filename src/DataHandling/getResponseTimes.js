@@ -84,9 +84,9 @@ const getResponseTimeCategory = (responseTime) => {
     let key = Math.round(responseTime)
     if (key > 60*60*6) { key = "6hr+" }
     else if (key > 60*60) { key = "1hr+" }
-    else if (key > 30*60) { key = "30min+" }
-    else if (key > 60*5) { key = `${Math.trunc(key/60/5)*5}min` }
-    else if (key > 60) { key = `${Math.trunc(key/60)}min` }
+    else if (key > 30*60) { key = "30m+" }
+    else if (key > 60*5) { key = `${Math.trunc(key/60/5)*5}m` }
+    else if (key > 60) { key = `${Math.trunc(key/60)}m` }
     else { key = `${Math.trunc(key/5)*5}s` }
     return key
 }
