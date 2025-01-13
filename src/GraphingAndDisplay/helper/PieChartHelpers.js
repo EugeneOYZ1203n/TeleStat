@@ -44,88 +44,46 @@ export function generatePieChartOptions(legends=true, legendPosition='top', tool
 }
 
 function generatePieChartColors(labelCount) {
-    const baseColors = [colors.primary, colors.secondary, colors.bg1]; 
-    const colorShades = []; // Array to hold the generated colors
+  const baseColors = [colors.primary, colors.secondary, colors.bg1]; 
+  const colorShades = []; // Array to hold the generated colors
   
-    // Convert a hex color to HSL
-    function hexToHsl(hex) {
-      const r = parseInt(hex.slice(1, 3), 16) / 255;
-      const g = parseInt(hex.slice(3, 5), 16) / 255;
-      const b = parseInt(hex.slice(5, 7), 16) / 255;
-  
-      const max = Math.max(r, g, b);
-      const min = Math.min(r, g, b);
-      let h = (max + min) / 2;
-      let s = (max + min) / 2;
-      let l = (max + min) / 2;
-  
-      if (max !== min) {
-        const d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        if (max === r) {
-          h = (g - b) / d + (g < b ? 6 : 0);
-        } else if (max === g) {
-          h = (b - r) / d + 2;
-        } else {
-          h = (r - g) / d + 4;
-        }
-        h /= 6;
-      }
-  
-      return { h: h * 360, s: s * 100, l: l * 100 };
+  for (let i = 0; i < labelCount; i++) {
+    const baseIndex = i % 3; // Cycle through the 3 base colors
+    let color = baseColors[baseIndex]; // Convert base color to HSL
+
+    if (i >= 3) {
+      colorShades.push(mutateHexColor(color, 60));
+    } else {
+      colorShades.push(color); // Keep base colors for the first 3
     }
-  
-    // Convert HSL to Hex
-    function hslToHex(h, s, l) {
-      s /= 100;
-      l /= 100;
-      const c = (1 - Math.abs(2 * l - 1)) * s;
-      const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-      const m = l - c / 2;
-      let r = 0, g = 0, b = 0;
-  
-      if (h >= 0 && h < 60) {
-        r = c, g = x, b = 0;
-      } else if (h >= 60 && h < 120) {
-        r = x, g = c, b = 0;
-      } else if (h >= 120 && h < 180) {
-        r = 0, g = c, b = x;
-      } else if (h >= 180 && h < 240) {
-        r = 0, g = x, b = c;
-      } else if (h >= 240 && h < 300) {
-        r = x, g = 0, b = c;
-      } else {
-        r = c, g = 0, b = x;
-      }
-  
-      r = Math.round((r + m) * 255);
-      g = Math.round((g + m) * 255);
-      b = Math.round((b + m) * 255);
-  
-      return `#${(1 << 24) + (r << 16) + (g << 8) + b}
-        .toString(16).slice(1)}`;
-    }
-  
-    // Generate random hue shift (±30 degrees)
-    function shiftHueRandomly(hsl) {
-      const randomShift = Math.floor(Math.random() * 60) - 30; // Random shift between -30 and 30
-      let newHue = hsl.h + randomShift;
-      if (newHue < 0) newHue += 360;
-      if (newHue >= 360) newHue -= 360;
-      return hslToHex(newHue, hsl.s, hsl.l); // Return the new color in hex
-    }
-  
-    for (let i = 0; i < labelCount; i++) {
-      const baseIndex = i % 3; // Cycle through the 3 base colors
-      let hsl = hexToHsl(baseColors[baseIndex]); // Convert base color to HSL
-  
-      if (i >= 3) {
-        // If the index exceeds 3, shift the hue randomly
-        colorShades.push(shiftHueRandomly(hsl));
-      } else {
-        colorShades.push(baseColors[baseIndex]); // Keep base colors for the first 3
-      }
-    }
-  
-    return colorShades;
   }
+
+  return colorShades;
+}
+
+function mutateHexColor(hex, mutationRange = 15) {
+
+  // Remove the "#" and convert to RGB
+  hex = hex.slice(1);
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  // Randomly mutate each color component (R, G, B)
+  const mutate = (value) => {
+    const randomShift = Math.floor(Math.random() * (mutationRange * 2 + 1)) - mutationRange;
+    const mutatedValue = Math.min(255, Math.max(0, value + randomShift)); // Ensure value stays between 0 and 255
+    return mutatedValue;
+  };
+
+  const mutatedR = mutate(r);
+  const mutatedG = mutate(g);
+  const mutatedB = mutate(b);
+
+  // Convert mutated RGB back to hex
+  const toHex = (value) => value.toString(16).padStart(2, "0");
+
+  const mutatedHex = `#${toHex(mutatedR)}${toHex(mutatedG)}${toHex(mutatedB)}`;
+
+  return mutatedHex;
+}

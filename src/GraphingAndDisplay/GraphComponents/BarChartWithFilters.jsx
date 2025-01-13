@@ -100,7 +100,7 @@ const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
         )}
         <Box display="flex" gap={2} sx={{width:"100%"}}>
         {/* Left: Type filters */}
-        <Box sx={{width:"10%", alignContent: "center"}}>
+        <Box sx={{width:"20%", alignContent: "center"}}>
             {Object.keys(initialData.types).map((type) => (
             <FormControlLabel
                 key={type}
@@ -129,9 +129,10 @@ const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
                 type="bar" data={filteredData} 
                 options={options} />
         </Box>
+        </Box>
 
         {/* Right: Category filters */}
-        <Box sx={{width:"10%", alignContent: "center"}}>
+        <Box sx={{width:"100%", alignContent: "center", display:"flex", flexDirection:"row", flexWrap:"wrap", mt:"4px"}}>
             {Object.keys(initialData.categories).map((category) => (
             <FormControlLabel
                 key={category}
@@ -150,7 +151,7 @@ const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
                 label={category}
             />
             ))}
-        </Box>
+        
         </Box>
     </Box>
   );

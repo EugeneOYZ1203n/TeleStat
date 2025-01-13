@@ -26,7 +26,7 @@ export const calculateStatsOfChat = async (
 
     const [messages_from, messages_to, messages_total, messages_daily] = await getMessageCounts(data, status_update_func);
 
-    if (messages_to < 100 || messages_from < 100) { return null; }
+    if (messages_to < 2 || messages_from < 2) { return null; }
 
     const [wordCount_from, wordCount_to, wordCount_total, wordCount_histogram] = await getWordCounts(data, status_update_func);
 

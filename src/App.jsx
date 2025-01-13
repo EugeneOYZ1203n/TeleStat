@@ -6,6 +6,7 @@ import UsageInfo from './DataHandling/Components/UsageInfo';
 import { Box } from '@mui/material';
 import { calculateStats } from './DataHandling/CalculateStats';
 import DisplayData from './GraphingAndDisplay/MainComponents/DisplayData';
+import OptionsTab from './DataHandling/Components/OptionsTab';
 
 function App() {
   const [isWaitingFile, setIsWaitingFile] = useState(true);
@@ -19,11 +20,16 @@ function App() {
 
   const [data, setData] = useState(null);
 
+  const [options, setOptions] = useState({
+    numChats : 5,
+  })
+
   const handleSetData = async (newData) => {
     setIsWaitingFile(false);
     setTotalOverall(newData.chats.list.length + 1) // Extra 1 for managing overall stats
     setData(await calculateStats(
       newData.chats.list, 
+      options.numChats,
       (statusMessage, statusProgress) => {
         setStatus(statusMessage)
         setProgress(statusProgress)
@@ -53,11 +59,12 @@ function App() {
         <>
           <UsageInfo/>
           <Dropzone setParsedJson={handleSetData}/>
+          <OptionsTab options={options} setOptions={setOptions}/>
         </>
       : isWaitingData
         ?
           <>
-            <LoadingBar message={overallStatus} value={overallProgress} total={totalOverall}/>
+            <LoadingBar message={overallStatus} value={overallProgress} total={Math.min(totalOverall, options.numChats)}/>
             <LoadingBar message={status} value={progress} total={100}/>
           </>
         : 

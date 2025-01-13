@@ -5,16 +5,17 @@ import { getDifferenceInDays } from './helper/getDifferenceInDays.js';
 
 export const calculateStats = async (
     data, 
+    numChats = 3,
     status_update_func,
     increment_progress_func
 ) => {
     const individualStats = []
     let index = 0;
+
+    const sorted_data = data.toSorted((a,b) => b.messages.length - a.messages.length).slice(0,numChats)
+    console.log(sorted_data)
     
-    for (const chat_data of data) {
-        if (index > 2) {
-            break
-        }
+    for (const chat_data of sorted_data) {
         const val = await calculateStatsOfChat(
             chat_data, status_update_func, 
             () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, index)
