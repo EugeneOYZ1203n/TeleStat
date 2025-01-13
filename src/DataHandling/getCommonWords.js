@@ -1,7 +1,6 @@
 import { chunkedFunction } from "./ChunkedFunctions";
 import { combineDictionary } from "./helper/combineDictionary";
 import { getMessageText } from "./helper/GetMessageText";
-import { removeStopwords } from 'stopword';
 import * as lda from 'lda'; //Old library, requires special import
 
 const extraStopwords = [
@@ -80,14 +79,11 @@ export const getCommonWords = async (
 };
 
 const cleanText = (text) => {
-    return removeStopwords(
-        removeStopwords(
-            text.toLowerCase().split(' ')
-        ),
-        extraStopwords
-    ).map(word => {
+    return text.toLowerCase().split(' ').map(word => {
         return word.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
     }).filter(word => {
         return !abbreviations.includes(word) && word.length > 3;
+    }).filter(word => {
+        return !extraStopwords.includes(word) && word.length > 3;
     })
 }
