@@ -32,5 +32,8 @@
     "globals": "^15.14.0",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"
+  },
+  "resolutions": {
+    "rollup": "npm:@rollup/wasm-node"
   }
 }
