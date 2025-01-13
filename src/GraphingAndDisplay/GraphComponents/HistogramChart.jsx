@@ -15,7 +15,16 @@ import { colors } from "../../config";
 // Registering the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true }) => {
+const HistogramChart = ({ 
+  title, 
+  labels, 
+  values, 
+  beginAtZeroX = true, 
+  beginAtZeroY=true, 
+  fontSize=18,
+  legends=false,
+  legendPosition='top'
+}) => {
   // Prepare the data for the histogram
   const chartData = {
     labels: labels, // X-axis labels (e.g., categories or bins)
@@ -34,7 +43,8 @@ const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: legends,
+        position: legendPosition,
       },
       tooltip: {
         callbacks: {
@@ -48,15 +58,13 @@ const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true
       x: {
         beginAtZero: beginAtZeroX,
         title: {
-          display: true,
-          text: "Categories",
+          display: false,
         },
       },
       y: {
         beginAtZero: beginAtZeroY,
         title: {
-          display: true,
-          text: "Frequency",
+          display: false,
         },
       },
     },
@@ -74,6 +82,11 @@ const HistogramChart = ({ labels, values, beginAtZeroX = true, beginAtZeroY=true
         minHeight: "40vh"
       }}
     >
+      {title && (
+        <Typography variant="h6" sx={{ mb: 2, fontSize: fontSize }}>
+          {title}
+        </Typography>
+      )}
       <Chart type="bar" data={chartData} options={options} />
     </Box>
   );

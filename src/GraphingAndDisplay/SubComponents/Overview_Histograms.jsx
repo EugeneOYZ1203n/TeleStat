@@ -15,14 +15,17 @@ const Overview_Histograms = ({data}) => {
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, padding: 4 }}>
             <HistogramChart 
+            title="Active Hours"
             labels={hours_active_labels}
             values={hours_active_values}
             />
             <HistogramChart 
+            title="Active Days of Week"
             labels={daysOfWeek_active_labels}
             values={daysOfWeek_active_values}
             />
             <HistogramChart 
+            title="Active months"
             labels={months_active_labels}
             values={months_active_values}
             />

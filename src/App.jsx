@@ -43,6 +43,7 @@ function App() {
         margin: "auto",
         paddingBottom: 12,
         width: "80vw",
+        minHeight: "80vh",
         textAlign: "center",
         alignContent: "center",
         verticalAlign: "center",
