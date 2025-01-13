@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { Box, FormControlLabel, Typography, RadioGroup, Radio } from "@mui/material";
 import { colors } from "../../config";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import HistogramChart from "./HistogramChart";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const HistogramChartWithFilters = ({ title, fontSize=18, initialData }) => {
   const [selectedCategory, setSelectedCategory] = useState(
