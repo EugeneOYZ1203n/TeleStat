@@ -10,26 +10,6 @@ import sad from "../../assets/sad-circle-svgrepo-com.svg"
 import stopwatch from "../../assets/stopwatch-svgrepo-com.svg"
 
 const Overview_BigNumbers = ({data}) => {
-    // const bigNumbers = [
-    //     {label: "Msgs Sent", number: data.overall.messages_sent},
-    //     {label: "Msgs Received", number: data.overall.messages_received},
-    //     {label: "Words Sent", number: data.overall.wordCount_sent},
-    //     {label: "Words Received", number: data.overall.wordCount_received},
-    //     {label: "Words Per Msg", number: data.overall.avgWordCountPerMessageSent},
-
-
-    //     {label: "Days Msged", number: data.overall.daysBetweenFirstAndLastMessage},
-    //     {label: "First Msg", number: data.overall.firstDateMessaged},
-    //     {label: "Last Msg", number: data.overall.lastDateMessaged},
-    //     {label: "Daily Msgs", number: data.overall.avgDailyMessages},
-
-
-    //     {label: "Avg Sentiment", number: data.overall.avg_message_sentiments},
-    //     {label: "Avg Reply Time (s)", number: data.overall.avgResponseTime},
-    //     {label: "Med. Reply Time (s)", number: data.overall.medianResponseTime}
-    // ]
-    // const smallBoxWidth = '500px'
-    // const bigBoxWidth = '1040px'
     const smallBoxWidth = '40%'
     const bigBoxWidth = 'calc(80% + 40px)'
     return (
@@ -42,13 +22,6 @@ const Overview_BigNumbers = ({data}) => {
                 justifyContent: "center"
             }}
         >
-            {/* {bigNumbers.map((item, index) => (
-            <BigNumber 
-                key={index} number={item.number} label={item.label} 
-                numberWidth="8en" labelWidth='100px'
-                height="80px" fontSize={36}
-            />
-            ))} */}
             {/* MSges sent */}
             <Box sx={{
                 backgroundColor:'#101010',
