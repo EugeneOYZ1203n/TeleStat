@@ -1,6 +1,6 @@
 import React from 'react'
 import BarChartWithFilters from '../GraphComponents/BarChartWithFilters'
-import { Box } from '@mui/material'
+import { Box, Typography} from '@mui/material'
 import { colors } from '../../config'
 import { combineDictionaryNoDuplicates } from '../../DataHandling/helper/combineDictionary'
 import HistogramChartWithFilters from '../GraphComponents/HistogramChartWithFilters'
@@ -313,6 +313,14 @@ const ChatList = ({data}) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, rowGap: 4, p: 4, bgcolor: colors.black }}>
+      <Typography
+        variant="h3"
+        component="div"
+        color={colors.primary}
+      >
+        More stats
+      </Typography>
+
       <BarChartWithFilters 
         title={"Message counts"}
         initialData={message_count_data}

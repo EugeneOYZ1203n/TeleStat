@@ -30,15 +30,32 @@ const BigNumber = ({
   return (
     <Box
       sx={{
-        textAlign: 'center',
-        display: 'flex',
+        // textAlign: 'center',
+        // display: 'block',
         alignItems: 'center',
-        justifyContent: 'center',
-        width: numberWidth+labelWidth,
+        // justifyContent: 'center',
+        // width: numberWidth+labelWidth,
+        width:"200px",
         height: height,
         padding: 1
       }}
     >
+      
+      {/* Display the label */}
+      <Typography
+        variant="subtitle1"
+        component="div"
+        width={labelWidth}
+        sx={{
+            fontSize: fontSize/2, // Customize font size
+            color: labelColor,
+            // textAlign: 'left',
+            overflow: "clip",
+            // ml: 2
+        }}
+      >
+        {label}
+      </Typography>
       {/* Display the number */}
       <Typography
         variant="h1"
@@ -48,34 +65,20 @@ const BigNumber = ({
         sx={{
             fontSize: fontSize, // Customize font size
             fontWeight: 'bold',
-            textAlign: 'right',
+            textAlign: 'left',
             overflow: "clip"
         }}
       >
-        <Box component="span" sx={{ color: padColor }}>
+        <Box component="span" sx={{ color: '#394d48' }}>
           {padding}
         </Box>
-        <Box component="span" sx={{ color: numberColor }}>
+        <Box component="span" sx={{ color: number >= 0 ? numberColor : colors.secondary }}>
           {numberString} 
         </Box>
         
       </Typography>
 
-      {/* Display the label */}
-      <Typography
-        variant="subtitle1"
-        component="div"
-        width={labelWidth}
-        sx={{
-            fontSize: fontSize/2, // Customize font size
-            color: labelColor,
-            textAlign: 'left',
-            overflow: "clip",
-            ml: 2
-        }}
-      >
-        {label}
-      </Typography>
+      
     </Box>
   );
 };
