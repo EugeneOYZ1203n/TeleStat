@@ -30,11 +30,7 @@ const BigNumber = ({
   return (
     <Box
       sx={{
-        // textAlign: 'center',
-        // display: 'block',
         alignItems: 'center',
-        // justifyContent: 'center',
-        // width: numberWidth+labelWidth,
         width:"200px",
         height: height,
         padding: 1
@@ -47,11 +43,9 @@ const BigNumber = ({
         component="div"
         width={labelWidth}
         sx={{
-            fontSize: fontSize/2, // Customize font size
+            fontSize: fontSize/2,
             color: labelColor,
-            // textAlign: 'left',
             overflow: "clip",
-            // ml: 2
         }}
       >
         {label}
@@ -63,7 +57,7 @@ const BigNumber = ({
         width={numberWidth}
         fontFamily={"monospace"}
         sx={{
-            fontSize: fontSize, // Customize font size
+            fontSize: fontSize,
             fontWeight: 'bold',
             textAlign: 'left',
             overflow: "clip"

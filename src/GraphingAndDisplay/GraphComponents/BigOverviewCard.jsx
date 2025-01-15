@@ -50,16 +50,6 @@ const BigOverviewCard = ({
                         height="80px" fontSize={36}
                     />
                 ))}
-            {/* <BigNumber 
-            number={data.overall.firstDateMessaged} label={"First message"} 
-            numberWidth="8en" labelWidth='150px'
-            height="80px" fontSize={36}
-            />
-            <BigNumber 
-                number={data.overall.lastDateMessaged} label={"Last message"} 
-                numberWidth="8en" labelWidth='150px'
-                height="80px" fontSize={36}
-            /> */}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' , marginLeft:'60px', marginRight:'100px' }}>
             {items.slice(2).map((item, index) => (
@@ -69,16 +59,6 @@ const BigOverviewCard = ({
                         height="80px" fontSize={36}
                     />
                 ))}
-            {/* <BigNumber 
-            number={data.overall.daysBetweenFirstAndLastMessage} label={"Days messsaged"} 
-            numberWidth="8en" labelWidth='150px'
-            height="80px" fontSize={36}
-            />
-            <BigNumber 
-                number={data.overall.avgDailyMessages} label={"Daily messages"} 
-                numberWidth="8en" labelWidth='150px'
-                height="80px" fontSize={36}
-            /> */}
             </Box>
         </Box>
   );
