@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { Chart } from "react-chartjs-2";
 import { colors } from "../../config";
+import ResizeableChartContainer from "./ResizeableChartContainer";
 
 
 const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
@@ -29,6 +30,7 @@ const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
   // Chart options
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     indexAxis: "y",
     plugins: {
       legend: {
@@ -114,9 +116,11 @@ const BarChartWithFilters = ({ title, fontSize=18, initialData }) => {
         <Box flex={1} sx={{
             width: "80%"
             }}>
-            <Chart 
-                type="bar" data={filteredData} 
-                options={options} />
+            <ResizeableChartContainer>
+              <Chart 
+                  type="bar" data={filteredData} 
+                  options={options} />
+            </ResizeableChartContainer>
         </Box>
         </Box>
 

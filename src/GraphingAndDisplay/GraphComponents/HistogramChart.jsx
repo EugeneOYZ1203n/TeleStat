@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { Chart } from "react-chartjs-2";
 import { colors } from "../../config";
+import ResizeableChartContainer from "./ResizeableChartContainer";
 
 const HistogramChart = ({ 
   title, 
@@ -29,6 +30,7 @@ const HistogramChart = ({
   // Configure chart options
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: legends,
@@ -73,7 +75,9 @@ const HistogramChart = ({
           {title}
         </Typography>
       )}
-      <Chart type="bar" data={chartData} options={options} />
+      <ResizeableChartContainer>
+        <Chart type="bar" data={chartData} options={options} />
+      </ResizeableChartContainer>
     </Box>
   );
 };
