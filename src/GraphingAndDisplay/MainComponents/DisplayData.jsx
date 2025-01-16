@@ -9,7 +9,8 @@ const DisplayData = ({data}) => {
       <Box
         sx={{
           width: '100%',
-          padding: 2
+          padding: 2,
+          // backgroundColor: 'red'
         }}
       >
         <Overview data = {data}/>

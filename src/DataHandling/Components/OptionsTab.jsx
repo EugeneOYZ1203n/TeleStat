@@ -37,11 +37,14 @@ const OptionsTab = ({options, setOptions}) => {
 
   return (
         
-    <Box width={"80%"} m={"auto"} color={colors.white}>
+    <Box width={"85%"} m={"auto"} color={colors.white}>
         <Typography variant="h6">Options</Typography>
         <Box textAlign={"left"}>
         <Typography variant="body1" gutterBottom>
-        Number of Chats to Retrieve:
+        Number of Chats to analyse:
+        </Typography>
+        <Typography variant="body2" sx={{fontStyle: 'italic', color:"grey"}} gutterBottom>
+        Analysing the chats take some time, select the amount of chats to analyse from your most active chats.
         </Typography>
         <TextField
         color={colors.white}

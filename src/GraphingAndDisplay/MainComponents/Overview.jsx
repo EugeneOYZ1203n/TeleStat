@@ -8,17 +8,21 @@ import Overview_Histograms from '../SubComponents/Overview_Histograms';
 const Overview = ({data}) => {
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2, bgcolor: colors.black }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2, bgcolor: "#111111" }}>
 
       <Typography
-        variant="h1"
+        variant="h3"
         component="div"
-        fontSize={30}
         color={colors.primary}
       >
-        Overall Stats across all Chats
+        Overall Stats
       </Typography>
-
+      <Typography
+        variant="body" 
+        sx = {{fontStyle: 'italic', color:'#19AC81'}}
+      >
+        (Across the selected chats)
+      </Typography>
       <Overview_BigNumbers data={data}/>
 
       <Overview_PieCharts data={data}/>

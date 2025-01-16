@@ -31,9 +31,8 @@ const UsageInfo = () => {
           marginBottom:"10px"
         }}
       >
-        Welcome this is some text introducing what the app do 
-        Welcome this is some text introducing what the app do 
-        Welcome this is some text introducing what the app do
+        Welcome to Telestat! Ever wondered about the statistics behind your Telegram chats? 
+        Look no further! This app lets you upload your chat history and explore detailed insights into your conversations.
       </Typography>
       <Typography variant="h4" color={colors.white}>
         Instructions
