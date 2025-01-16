@@ -35,10 +35,12 @@ const BigOverviewCard = ({
             }}
         >
             <img 
+                class='bigsectionicon'
                 src={images[img]}
                 alt="Icon" 
                 style={{
                     width: "8%",
+                    maxHeight: '80px',
                     marginRight: "30px"
                 }}
             />
