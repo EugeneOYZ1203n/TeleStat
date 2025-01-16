@@ -42,4 +42,4 @@ Telestat is more than just a stats tool—it’s a fun and meaningful way to loo
 
 - [@EugeneOYZ1203n](https://github.com/EugeneOYZ1203n)
 - [@Just-Chocomint](https://github.com/Just-Chocomint)
-
+- [@Albertd13](https://github.com/Albertd13)
