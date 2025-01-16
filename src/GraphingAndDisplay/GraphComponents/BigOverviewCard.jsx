@@ -38,7 +38,7 @@ const BigOverviewCard = ({
                 src={images[img]}
                 alt="Icon" 
                 style={{
-                    width: "60px",
+                    width: "8%",
                     marginRight: "30px"
                 }}
             />

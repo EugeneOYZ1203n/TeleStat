@@ -5,8 +5,6 @@ import BigOverviewCard from '../GraphComponents/BigOverviewCard';
 
 
 const Overview_BigNumbers = ({data}) => {
-    const smallBoxWidth = '40%'
-    const bigBoxWidth = 'calc(80% + 40px)'
     return (
         <Box
             sx={{
@@ -26,13 +24,13 @@ const Overview_BigNumbers = ({data}) => {
             <SmallOverviewCard items = {[
                 {label:"Msgs Received", data:data.overall.messages_received},
                 {label:"Words Received", data:data.overall.wordCount_received}
-            ]} img="plane" labelWidth='150px'/>
+            ]} img="mailbox" labelWidth='150px'/>
             {/* Date stuff */}
             <BigOverviewCard items = {[
                 {label:"First message", data:data.overall.firstDateMessaged},
                 {label:"Last message", data:data.overall.lastDateMessaged},
                 {label:"Days messaged", data:data.overall.daysBetweenFirstAndLastMessage},
-                {label:"Dailymessages", data:data.overall.avgDailyMessages},
+                {label:"Daily messages", data:data.overall.avgDailyMessages},
             ]} img={'calendar'} labelWidth='150px'/>
             {/* sentiment */}
             <SmallOverviewCard items = {[
