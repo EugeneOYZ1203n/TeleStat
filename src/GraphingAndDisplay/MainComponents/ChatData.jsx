@@ -6,7 +6,7 @@ import { combineDictionaryNoDuplicates } from '../../DataHandling/helper/combine
 import HistogramChartWithFilters from '../GraphComponents/HistogramChartWithFilters'
 import { getDateRangeArray } from '../helper/DateFormatting'
 import { getDateString } from '../../DataHandling/helper/getDateString'
-import { daysOfWeek_active_labels, hours_active_labels, months_active_labels } from '../helper/DataLabels'
+import { daysOfWeek_active_labels, hours24_active_labels, months_active_labels } from '../helper/DataLabels'
 import KeywordsWithFilters from '../GraphComponents/KeywordsWithFilters'
 import MessageDisplayWithFilter from '../GraphComponents/MessageDisplayWithFilters'
 
@@ -94,8 +94,8 @@ const ChatList = ({data}) => {
   const hours_active_data = data.chats.map((el)=>{
     return {
       [el.name] : {
-        labels: hours_active_labels,
-        values: hours_active_labels.map((label)=>el.hours_active[label] || 0)
+        labels: hours24_active_labels,
+        values: hours24_active_labels.map((label, i)=>el.hours_active[i] || 0)
       }
     }
   }).reduce(combineDictionaryNoDuplicates)
@@ -113,7 +113,7 @@ const ChatList = ({data}) => {
     return {
       [el.name] : {
         labels: months_active_labels,
-        values: months_active_labels.map((label)=>el.month_active[label] || 0)
+        values: months_active_labels.map((label, i)=>el.month_active[i + 1] || 0)
       }
     }
   }).reduce(combineDictionaryNoDuplicates)
