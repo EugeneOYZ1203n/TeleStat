@@ -37,6 +37,7 @@ const SmallOverviewCard = ({
                 src={images[img]}
                 alt="Icon" 
                 style={{
+                    maxHeight: '80px',
                     width: "15%",
                     marginRight: "10%"
                 }}
