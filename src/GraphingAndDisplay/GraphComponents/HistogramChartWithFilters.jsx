@@ -25,9 +25,9 @@ const HistogramChartWithFilters = ({ title, fontSize=18, initialData }) => {
       }}
     >
       {title && (
-          <Typography variant="h6" sx={{ mb: 2, fontSize: fontSize }}>
-            {title}
-          </Typography>
+        <Typography variant="h6" sx={{ mb: 2, fontSize: fontSize }}>
+          {title}
+        </Typography>
       )}
       <HistogramChart 
         labels={initialData[selectedCategory].labels}
