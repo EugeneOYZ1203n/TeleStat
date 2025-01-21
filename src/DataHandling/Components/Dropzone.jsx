@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Typography, Paper, Alert } from "@mui/material";
 import { colors } from "../../config";
 import docsvg from "../../assets/icons8-document.svg";
+import { parseReviver } from "../../DataExportImport/ParseReviver";
 
-const Dropzone = ({ setParsedJson }) => {
+const Dropzone = ({ setTelegramExportData, setSavedData }) => {
   const [error, setError] = useState(null);
-  const [fileName, setFileName] = useState(null);
-  const [fileSize, setFileSize] = useState(0);
+  const [telegramExportDisplay, setTelegramExportDisplay] = useState(null);
+  const [savedDataDisplay, setSavedDataDisplay] = useState(null);
   const fileInputRef = useRef(null);
   const errorRef = useRef(null);
   
@@ -38,16 +39,20 @@ const Dropzone = ({ setParsedJson }) => {
         try {
             const parsedJson = JSON.parse(e.target?.result);
 
-            if (!parsedJson.chats || !parsedJson.chats.list) {
-                throw new Error("Invalid JSON format")
+            console.log(parsedJson)
+
+            if (parsedJson.isTeleStatData) {
+              setSavedDataDisplay(`${file.name} (${convertSize(file.size)})`)
+              setSavedData(parseReviver(parsedJson))
+            } else if (!!parsedJson.chats && !!parsedJson.chats.list) {
+              setTelegramExportDisplay(`${file.name} (${convertSize(file.size)})`)
+              setTelegramExportData(parsedJson)
+            } else {
+              throw new Error("Invalid JSON format")
             }
-            
-            setFileName(file.name)
-            setFileSize(file.size)
-            
-            setParsedJson(parsedJson);
         } catch (err) {
-            setError("Invalid JSON format");
+          console.log(err)
+          setError("Invalid JSON format");
         }
       };
       reader.readAsText(file);
@@ -107,12 +112,13 @@ const Dropzone = ({ setParsedJson }) => {
         }}
       />
       <Typography variant="h6" color={colors.white} sx={{position: "relative"}}>
-          { fileName 
-            ? `Uploaded ${fileName} (${convertSize(fileSize)})`
-            : (<span>Click to select file from system <br></br>
-              or<br></br>
-              Drag and drop here</span>)
-          }
+          { telegramExportDisplay && `Telegram Data: ${telegramExportDisplay}`}<br></br>
+          { savedDataDisplay && `Prev. Saved Data: ${savedDataDisplay}`}
+          { (!telegramExportDisplay && !savedDataDisplay) && (<span>
+                Click to select file from system <br></br>
+                or<br></br>
+                Drag and drop here
+              </span>)}
       </Typography>
       <input
         type="file"

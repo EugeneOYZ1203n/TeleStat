@@ -1,12 +1,16 @@
 import React from "react";
 import { Button } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
-import { colors } from "../../config";
+import { colors, exportDataVersion } from "../../config";
 
 const DownloadButton = ({ data }) => {
 
     const onDownload = () => {
-        const jsonString = JSON.stringify(data, null, 2); // Pretty-print with 2 spaces
+        const jsonString = JSON.stringify({
+            isTeleStatData : true,
+            exportVersion : exportDataVersion,
+            ...data,
+        }, null, 2); // Pretty-print with 2 spaces
 
         // Create a Blob object
         const blob = new Blob([jsonString], { type: "application/json" });

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import './App.css';
 import './GraphingAndDisplay/helper/ChartSetup'
 import Dropzone from './DataHandling/Components/Dropzone';
@@ -22,34 +22,56 @@ function App() {
   const [progress, setProgress] = useState(0);
 
   const [rawData, setRawData] = useState(null);
+  const [savedData, setSavedData] = useState(null);
   const [data, setData] = useState(null);
 
   const [options, setOptions] = useState({
     numChats : 5,
   })
   const [selectedChats, setSelectedChats] = useState([]);
+  const [allChats, setAllChats] = useState([]);
 
-  const handleSetData = async (newData) => {
+  const handleTelegramExportData = async (newData) => {
     setProcessStatus("Waiting Parse");
-    setSelectedChats(GetValidChats(newData.chats.list))
-    setRawData(newData);
+    const chatNames = GetValidChats(newData.chats.list);
+    setSelectedChats(chatNames)
+    setAllChats(chatNames)
+    setRawData(newData)
+  }
+
+  const handleSavedData = async (newData) => {
+    setProcessStatus("Waiting Parse");
+    const chatNames = newData.chats.map(el=>el.name);
+    setSelectedChats(chatNames)
+    setAllChats(chatNames)
+    setSavedData(newData)
   }
 
   const handleParseData = async () => {
     setProcessStatus("Parsing Data");
-    setData(await calculateStats(
-      rawData.chats.list, 
-      options,
-      selectedChats,
-      (statusMessage, statusProgress) => {
-        setStatus(statusMessage)
-        setProgress(statusProgress)
-      },
-      (text, index) => {
-        setOverallStatus(text)
-        setOverallProgress(index)
-      }
-    ))
+
+    console.log(rawData)
+    console.log(savedData)
+
+    if (!!rawData) {
+      setData(await calculateStats(
+        rawData.chats.list, 
+        options,
+        selectedChats,
+        savedData,
+        (statusMessage, statusProgress) => {
+          setStatus(statusMessage)
+          setProgress(statusProgress)
+        },
+        (text, index) => {
+          setOverallStatus(text)
+          setOverallProgress(index)
+        }
+      ))
+    } else {
+      setData(savedData)
+    }
+    
     setProcessStatus("Finish Parsing");
   }
 
@@ -69,10 +91,10 @@ function App() {
       ? 
         <>
           <UsageInfo/>
-          <Dropzone setParsedJson={handleSetData}/>
+          <Dropzone setTelegramExportData={handleTelegramExportData} setSavedData={handleSavedData}/>
           <ParseDataButton handleParseData={handleParseData} disabled={processStatus == "Waiting Input"}/>
-          {!rawData || <ChatSelector 
-            chatNames={GetValidChats(rawData.chats.list)} selectedChats={selectedChats} setSelectedChats={setSelectedChats}
+          {!allChats || <ChatSelector 
+            chatNames={allChats} selectedChats={selectedChats} setSelectedChats={setSelectedChats}
           />}
         </>
       : processStatus == "Parsing Data"
