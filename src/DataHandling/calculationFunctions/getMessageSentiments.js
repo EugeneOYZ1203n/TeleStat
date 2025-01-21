@@ -1,5 +1,5 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { getMessageSentiment } from './helper/getMessageSentiment';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { getMessageSentiment } from '../helper/getMessageSentiment';
 
 export const getMessageSentiments = async (
     data,

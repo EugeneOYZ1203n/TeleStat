@@ -1,8 +1,8 @@
-import { calculateMedian } from './helper/calculateMedian';
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getDifferenceInSeconds } from './helper/getDifferenceInDays';
-import { getMessageDate } from './helper/getMessageDate';
+import { calculateMedian } from '../helper/calculateMedian';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getDifferenceInSeconds } from '../helper/getDifferenceInDays';
+import { getMessageDate } from '../helper/getMessageDate';
 
 export const getResponseTimes = async (
     data,

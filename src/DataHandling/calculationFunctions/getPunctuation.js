@@ -1,6 +1,6 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { containsPunctuation } from './helper/containsPunctuation';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { containsPunctuation } from '../helper/containsPunctuation';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getPunctuation = async (
     data,

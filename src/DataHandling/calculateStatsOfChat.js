@@ -1,14 +1,14 @@
-import { getActivePeriods } from './getActivePeriods';
-import { getCommonWords } from './getCommonWords';
-import { getEmojiReactions } from './getEmojiReactions';
-import { getIndividualChatBadges } from './getIndividualChatBadges';
-import { getMessageCounts } from './getMessageCounts';
-import { getMessageSentiments } from './getMessageSentiments';
-import { getMilestoneMessages } from './getMilestoneMessages';
-import { getPhonesAndLinks } from './getPhonesAndLinks';
-import { getPunctuation } from './getPunctuation';
-import { getResponseTimes } from './getResponseTimes';
-import { getWordCounts } from './getWordCounts';
+import { getActivePeriods } from './calculationFunctions/getActivePeriods';
+import { getCommonWords } from './calculationFunctions/getCommonWords';
+import { getEmojiReactions } from './calculationFunctions/getEmojiReactions';
+import { getIndividualChatBadges } from './calculationFunctions/getIndividualChatBadges';
+import { getMessageCounts } from './calculationFunctions/getMessageCounts';
+import { getMessageSentiments } from './calculationFunctions/getMessageSentiments';
+import { getMilestoneMessages } from './calculationFunctions/getMilestoneMessages';
+import { getPhonesAndLinks } from './calculationFunctions/getPhonesAndLinks';
+import { getPunctuation } from './calculationFunctions/getPunctuation';
+import { getResponseTimes } from './calculationFunctions/getResponseTimes';
+import { getWordCounts } from './calculationFunctions/getWordCounts';
 import { getDifferenceInDays } from './helper/getDifferenceInDays';
 import { getMessageDate } from './helper/getMessageDate';
 

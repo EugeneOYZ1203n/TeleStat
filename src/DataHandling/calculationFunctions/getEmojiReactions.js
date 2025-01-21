@@ -1,6 +1,6 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { containsEmoji } from './helper/containsEmoji';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { containsEmoji } from '../helper/containsEmoji';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getEmojiReactions = async (
     data,

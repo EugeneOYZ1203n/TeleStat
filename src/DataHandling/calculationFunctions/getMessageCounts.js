@@ -1,7 +1,7 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getDateString } from './helper/getDateString';
-import { getMessageDate } from './helper/getMessageDate';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getDateString } from '../helper/getDateString';
+import { getMessageDate } from '../helper/getMessageDate';
 
 export const getMessageCounts = async (
     data,

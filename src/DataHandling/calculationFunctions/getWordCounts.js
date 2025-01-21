@@ -1,6 +1,6 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getWordCounts = async (
     data,

@@ -1,3 +1,4 @@
+import { exportDataVersion } from '../config.js';
 import { calculateStatsOfChat } from './calculateStatsOfChat.js';
 import { combineDictionary } from './helper/combineDictionary.js';
 import { estimateOverallMedian } from './helper/estimateOverallMedian.js';
@@ -7,6 +8,7 @@ export const calculateStats = async (
     data, 
     options,
     selectedChats,
+    savedData,
     status_update_func,
     increment_progress_func
 ) => {

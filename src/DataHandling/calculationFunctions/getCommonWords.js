@@ -1,7 +1,7 @@
-import { ldaFunc } from "./helper/lda";
-import { chunkedFunction } from "./ChunkedFunctions";
-import { combineDictionary } from "./helper/combineDictionary";
-import { getMessageText } from "./helper/GetMessageText";
+import { ldaFunc } from "../helper/lda";
+import { chunkedFunction } from "../ChunkedFunctions";
+import { combineDictionary } from "../helper/combineDictionary";
+import { getMessageText } from "../helper/GetMessageText";
 
 const extraStopwords = [
     "just","want","think","damn","need","when","time","first","back","maybe","going","nice",

@@ -1,6 +1,6 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { getMessageDate } from './helper/getMessageDate';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { getMessageDate } from '../helper/getMessageDate';
+import { getMessageText } from '../helper/GetMessageText';
 
 const funMilestoneNumbers = [69, 111, 123, 420, 666, 777, 888, 1010, 1234, 1337, 9001]
 /*

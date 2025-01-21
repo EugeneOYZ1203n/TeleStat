@@ -1,7 +1,7 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getDayOfWeekString, getHourString, getMonthString } from './helper/getDateString';
-import { getMessageDate } from './helper/getMessageDate';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getDayOfWeekString, getHourString, getMonthString } from '../helper/getDateString';
+import { getMessageDate } from '../helper/getMessageDate';
 
 export const getActivePeriods = async (
     data,

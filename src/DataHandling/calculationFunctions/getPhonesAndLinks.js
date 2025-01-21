@@ -1,6 +1,6 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { extractEmails, extractLinks, extractPhoneNumbers, extractSocialMediaHandles } from './helper/extractPhonesAndLinks';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { extractEmails, extractLinks, extractPhoneNumbers, extractSocialMediaHandles } from '../helper/extractPhonesAndLinks';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getPhonesAndLinks = async (
     data,
