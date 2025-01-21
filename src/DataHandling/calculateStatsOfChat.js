@@ -24,6 +24,8 @@ export const calculateStatsOfChat = async (
         return null;
     }
 
+    const last_message_id = data.messages.slice(-1)[0].id;
+
     const [messages_from, messages_to, messages_total, messages_daily] = await getMessageCounts(data, status_update_func);
 
     if (messages_to < 2 || messages_from < 2) { return null; }
@@ -77,7 +79,7 @@ export const calculateStatsOfChat = async (
     )
 
     return {
-        name: data.name,
+        name: data.name, last_message_id,
         messages_from, messages_to, messages_total, messages_daily,
         wordCount_from, wordCount_to, wordCount_total, wordCount_histogram,
         avgWordCountPerMessage_from, avgWordCountPerMessage_to, avgWordCountPerMessage_total,

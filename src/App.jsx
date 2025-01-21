@@ -11,6 +11,7 @@ import OptionsTab from './DataHandling/Components/OptionsTab';
 import ParseDataButton from './DataHandling/Components/ParseDataButton';
 import ChatSelector from './DataHandling/Components/ChatSelector';
 import { GetValidChats } from './DataHandling/GetValidChats';
+import DownloadButton from './DataExportImport/Components/DownloadButton';
 
 function App() {
   const [processStatus, setProcessStatus] = useState("Waiting Input")
@@ -81,7 +82,10 @@ function App() {
             <LoadingBar message={status} value={progress} total={100}/>
           </>
         : 
-          <DisplayData data={data}/>
+          <>
+            <DownloadButton data={data}/>
+            <DisplayData data={data}/>
+          </>
       }
     </Box>
   )
