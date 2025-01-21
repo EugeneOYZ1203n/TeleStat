@@ -41,9 +41,7 @@ const Dropzone = ({ setParsedJson }) => {
             if (!parsedJson.chats || !parsedJson.chats.list) {
                 throw new Error("Invalid JSON format")
             }
-
-            console.log(file)
-
+            
             setFileName(file.name)
             setFileSize(file.size)
             

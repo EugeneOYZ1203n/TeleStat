@@ -9,11 +9,12 @@ import { calculateStats } from './DataHandling/CalculateStats';
 import DisplayData from './GraphingAndDisplay/MainComponents/DisplayData';
 import OptionsTab from './DataHandling/Components/OptionsTab';
 import ParseDataButton from './DataHandling/Components/ParseDataButton';
+import ChatSelector from './DataHandling/Components/ChatSelector';
+import { GetValidChats } from './DataHandling/GetValidChats';
 
 function App() {
   const [processStatus, setProcessStatus] = useState("Waiting Input")
 
-  const [totalOverall, setTotalOverall] = useState(0);
   const [overallProgress, setOverallProgress] = useState(0);
   const [overallStatus, setOverallStatus] = useState("");
   const [status, setStatus] = useState("");
@@ -25,10 +26,11 @@ function App() {
   const [options, setOptions] = useState({
     numChats : 5,
   })
+  const [selectedChats, setSelectedChats] = useState([]);
 
   const handleSetData = async (newData) => {
     setProcessStatus("Waiting Parse");
-    setTotalOverall(newData.chats.list.length + 1) // Extra 1 for managing overall stats
+    setSelectedChats(GetValidChats(newData.chats.list))
     setRawData(newData);
   }
 
@@ -36,7 +38,8 @@ function App() {
     setProcessStatus("Parsing Data");
     setData(await calculateStats(
       rawData.chats.list, 
-      options.numChats,
+      options,
+      selectedChats,
       (statusMessage, statusProgress) => {
         setStatus(statusMessage)
         setProgress(statusProgress)
@@ -67,12 +70,14 @@ function App() {
           <UsageInfo/>
           <Dropzone setParsedJson={handleSetData}/>
           <ParseDataButton handleParseData={handleParseData} disabled={processStatus == "Waiting Input"}/>
-          <OptionsTab options={options} setOptions={setOptions}/>
+          {!rawData || <ChatSelector 
+            chatNames={GetValidChats(rawData.chats.list)} selectedChats={selectedChats} setSelectedChats={setSelectedChats}
+          />}
         </>
       : processStatus == "Parsing Data"
         ?
           <>
-            <LoadingBar message={overallStatus} value={overallProgress} total={Math.min(totalOverall, options.numChats)}/>
+            <LoadingBar message={overallStatus} value={overallProgress} total={selectedChats.length}/>
             <LoadingBar message={status} value={progress} total={100}/>
           </>
         : 
