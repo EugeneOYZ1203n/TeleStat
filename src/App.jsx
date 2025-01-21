@@ -8,10 +8,10 @@ import { Box } from '@mui/material';
 import { calculateStats } from './DataHandling/CalculateStats';
 import DisplayData from './GraphingAndDisplay/MainComponents/DisplayData';
 import OptionsTab from './DataHandling/Components/OptionsTab';
+import ParseDataButton from './DataHandling/Components/ParseDataButton';
 
 function App() {
-  const [isWaitingFile, setIsWaitingFile] = useState(true);
-  const [isWaitingData, setIsWaitingData] = useState(true);
+  const [processStatus, setProcessStatus] = useState("Waiting Input")
 
   const [totalOverall, setTotalOverall] = useState(0);
   const [overallProgress, setOverallProgress] = useState(0);
@@ -19,6 +19,7 @@ function App() {
   const [status, setStatus] = useState("");
   const [progress, setProgress] = useState(0);
 
+  const [rawData, setRawData] = useState(null);
   const [data, setData] = useState(null);
 
   const [options, setOptions] = useState({
@@ -26,10 +27,15 @@ function App() {
   })
 
   const handleSetData = async (newData) => {
-    setIsWaitingFile(false);
+    setProcessStatus("Waiting Parse");
     setTotalOverall(newData.chats.list.length + 1) // Extra 1 for managing overall stats
+    setRawData(newData);
+  }
+
+  const handleParseData = async () => {
+    setProcessStatus("Parsing Data");
     setData(await calculateStats(
-      newData.chats.list, 
+      rawData.chats.list, 
       options.numChats,
       (statusMessage, statusProgress) => {
         setStatus(statusMessage)
@@ -40,7 +46,7 @@ function App() {
         setOverallProgress(index)
       }
     ))
-    setIsWaitingData(false);
+    setProcessStatus("Finish Parsing");
   }
 
   return (
@@ -55,14 +61,15 @@ function App() {
         alignContent: "center",
         verticalAlign: "center",
       }}>
-      {isWaitingFile 
+      {processStatus == "Waiting Input" || processStatus == "Waiting Parse"
       ? 
         <>
           <UsageInfo/>
           <Dropzone setParsedJson={handleSetData}/>
+          <ParseDataButton handleParseData={handleParseData} disabled={processStatus == "Waiting Input"}/>
           <OptionsTab options={options} setOptions={setOptions}/>
         </>
-      : isWaitingData
+      : processStatus == "Parsing Data"
         ?
           <>
             <LoadingBar message={overallStatus} value={overallProgress} total={Math.min(totalOverall, options.numChats)}/>

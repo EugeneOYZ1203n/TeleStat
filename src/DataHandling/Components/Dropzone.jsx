@@ -5,6 +5,8 @@ import docsvg from "../../assets/icons8-document.svg";
 
 const Dropzone = ({ setParsedJson }) => {
   const [error, setError] = useState(null);
+  const [fileName, setFileName] = useState(null);
+  const [fileSize, setFileSize] = useState(0);
   const fileInputRef = useRef(null);
   const errorRef = useRef(null);
   
@@ -39,6 +41,11 @@ const Dropzone = ({ setParsedJson }) => {
             if (!parsedJson.chats || !parsedJson.chats.list) {
                 throw new Error("Invalid JSON format")
             }
+
+            console.log(file)
+
+            setFileName(file.name)
+            setFileSize(file.size)
             
             setParsedJson(parsedJson);
         } catch (err) {
@@ -102,9 +109,12 @@ const Dropzone = ({ setParsedJson }) => {
         }}
       />
       <Typography variant="h6" color={colors.white} sx={{position: "relative"}}>
-          Click to select file from system <br></br>
-          or<br></br>
-          Drag and drop here
+          { fileName 
+            ? `Uploaded ${fileName} (${convertSize(fileSize)})`
+            : (<span>Click to select file from system <br></br>
+              or<br></br>
+              Drag and drop here</span>)
+          }
       </Typography>
       <input
         type="file"
@@ -135,3 +145,20 @@ const Dropzone = ({ setParsedJson }) => {
 };
 
 export default Dropzone;
+
+function convertSize(sizeBytes, decimalBase = true) {
+  if (sizeBytes === 0) return "0 Bytes";
+
+  const base = decimalBase ? 1000 : 1024;
+  const suffixes = decimalBase
+      ? ["B", "KB", "MB", "GB", "TB", "PB"]
+      : ["B", "KiB", "MiB", "GiB", "TiB", "PiB"];
+
+  let i = 0;
+  while (sizeBytes >= base && i < suffixes.length - 1) {
+      sizeBytes /= base;
+      i++;
+  }
+
+  return `${sizeBytes.toFixed(2)} ${suffixes[i]}`;
+}
