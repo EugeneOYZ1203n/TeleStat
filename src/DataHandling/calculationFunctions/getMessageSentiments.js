@@ -3,6 +3,7 @@ import { getMessageSentiment } from '../helper/getMessageSentiment';
 
 export const getMessageSentiments = async (
     data,
+    savedData,
     status_update_func
 ) => {
     const total_message_sentiments_from = await chunkedFunction(
@@ -36,6 +37,14 @@ export const getMessageSentiments = async (
     );
 
     const total_message_sentiments_total = total_message_sentiments_to + total_message_sentiments_from;
+
+    if (savedData) {
+        return [
+            total_message_sentiments_from + savedData.total_message_sentiments_from,
+            total_message_sentiments_to + savedData.total_message_sentiments_to,
+            total_message_sentiments_total + savedData.total_message_sentiments_total
+        ]
+    }
 
     return [total_message_sentiments_from, total_message_sentiments_to, total_message_sentiments_total];
 };

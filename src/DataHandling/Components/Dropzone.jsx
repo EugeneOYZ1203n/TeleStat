@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Typography, Paper, Alert } from "@mui/material";
 import { colors } from "../../config";
 import docsvg from "../../assets/icons8-document.svg";
-import { parseReviver } from "../../DataExportImport/ParseReviver";
+import { parseReviver } from "../../DataExportImport/parseReviver";
 
 const Dropzone = ({ setTelegramExportData, setSavedData }) => {
   const [error, setError] = useState(null);
@@ -38,8 +38,6 @@ const Dropzone = ({ setTelegramExportData, setSavedData }) => {
       reader.onload = (e) => {
         try {
             const parsedJson = JSON.parse(e.target?.result);
-
-            console.log(parsedJson)
 
             if (parsedJson.isTeleStatData) {
               setSavedDataDisplay(`${file.name} (${convertSize(file.size)})`)

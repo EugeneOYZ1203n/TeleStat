@@ -14,14 +14,15 @@ export const calculateStats = async (
 ) => {
     const individualStats = []
     let index = 0;
-    
+
     const filtered_data = data.filter((el) => (selectedChats.includes(el.name)))
 
-    console.log(filtered_data)
+    const filtered_savedData = savedData ? filtered_data.map((el) => savedData.chats.find(chat=>el.name === chat.name)) : null
     
-    for (const chat_data of filtered_data) {
+    for (let i = 0; i < filtered_data.length; i++ ) {
+        const chat_data = filtered_data[i]
         const val = await calculateStatsOfChat(
-            chat_data, status_update_func, 
+            chat_data, (savedData ? filtered_savedData[i] : null), status_update_func, 
             () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, index)
         )
         if (val) { individualStats.push(val); }

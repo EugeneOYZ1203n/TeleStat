@@ -1,6 +1,4 @@
 export const parseReviver = (data) => {
-    console.log(data)
-
     // data.isTeleStatData = data.isTeleStatData === "true";
     
     // for (const term in [

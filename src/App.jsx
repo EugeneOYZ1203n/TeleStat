@@ -35,7 +35,7 @@ function App() {
     setProcessStatus("Waiting Parse");
     const chatNames = GetValidChats(newData.chats.list);
     setSelectedChats(chatNames)
-    setAllChats(chatNames)
+    setAllChats(merge(allChats, chatNames))
     setRawData(newData)
   }
 
@@ -43,15 +43,12 @@ function App() {
     setProcessStatus("Waiting Parse");
     const chatNames = newData.chats.map(el=>el.name);
     setSelectedChats(chatNames)
-    setAllChats(chatNames)
+    setAllChats(merge(allChats, chatNames))
     setSavedData(newData)
   }
 
   const handleParseData = async () => {
     setProcessStatus("Parsing Data");
-
-    console.log(rawData)
-    console.log(savedData)
 
     if (!!rawData) {
       setData(await calculateStats(
@@ -93,7 +90,7 @@ function App() {
           <UsageInfo/>
           <Dropzone setTelegramExportData={handleTelegramExportData} setSavedData={handleSavedData}/>
           <ParseDataButton handleParseData={handleParseData} disabled={processStatus == "Waiting Input"}/>
-          {!allChats || <ChatSelector 
+          {allChats.length > 0 && <ChatSelector 
             chatNames={allChats} selectedChats={selectedChats} setSelectedChats={setSelectedChats}
           />}
         </>
@@ -114,3 +111,10 @@ function App() {
 }
 
 export default App
+
+const merge = (a, b, predicate = (a, b) => a === b) => {
+  const c = [...a]; // copy to avoid side effects
+  // add all items from B to copy C if they're not already present
+  b.forEach((bItem) => (c.some((cItem) => predicate(bItem, cItem)) ? null : c.push(bItem)))
+  return c;
+}

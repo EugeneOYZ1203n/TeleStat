@@ -5,6 +5,7 @@ import { getMessageDate } from '../helper/getMessageDate';
 
 export const getActivePeriods = async (
     data,
+    savedData,
     status_update_func
 ) => {
     const hours_active = await chunkedFunction(
@@ -48,6 +49,14 @@ export const getActivePeriods = async (
         },
         (progress) => status_update_func(`Month Active`, progress)
     );
+
+    if (savedData) {
+        return [
+            combineDictionary(hours_active, savedData.hours_active),
+            combineDictionary(daysOfWeek_active, savedData.daysOfWeek_active),
+            combineDictionary(month_active, savedData.month_active)
+        ]
+    }
 
     return [hours_active, daysOfWeek_active, month_active];
 };

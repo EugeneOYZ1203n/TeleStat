@@ -5,8 +5,11 @@ import { getMessageDate } from '../helper/getMessageDate';
 
 export const getMessageCounts = async (
     data,
+    savedData,
     status_update_func
 ) => {
+    
+
     const messages_from = await chunkedFunction(
         data.messages, 0,
         (a, b) => a + b,
@@ -43,7 +46,16 @@ export const getMessageCounts = async (
             return result;
         },
         (progress) => status_update_func(`Daily messages`, progress)
-    );
+    );    
+
+    if (savedData) {
+        return [
+            messages_from + savedData.messages_from, 
+            messages_to + savedData.messages_to, 
+            messages_total + savedData.messages_total, 
+            combineDictionary(messages_daily, savedData.messages_daily)
+        ]
+    }
 
     return [messages_from, messages_to, messages_total, messages_daily];
 };
