@@ -1,9 +1,10 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { extractEmails, extractLinks, extractPhoneNumbers, extractSocialMediaHandles } from './helper/extractPhonesAndLinks';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { extractEmails, extractLinks, extractPhoneNumbers, extractSocialMediaHandles } from '../helper/extractPhonesAndLinks';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getPhonesAndLinks = async (
     data,
+    savedData,
     status_update_func
 ) => {
     const phoneNumbers = await chunkedFunction(
@@ -53,6 +54,15 @@ export const getPhonesAndLinks = async (
         },
         (progress) => status_update_func(`Links shared`, progress)
     );
+
+    if (savedData) {
+        return [
+            savedData.phoneNumbers.concat(phoneNumbers),
+            savedData.emails.concat(emails),
+            savedData.handles.concat(handles),
+            savedData.links.concat(links)
+        ]
+    }
 
     return [phoneNumbers, emails, handles, links];
 };

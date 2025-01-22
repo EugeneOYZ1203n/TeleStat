@@ -2,9 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Typography, Paper, Alert } from "@mui/material";
 import { colors } from "../../config";
 import docsvg from "../../assets/icons8-document.svg";
+import { parseReviver } from "../../DataExportImport/parseReviver";
 
-const Dropzone = ({ setParsedJson }) => {
+const Dropzone = ({ setTelegramExportData, setSavedData }) => {
   const [error, setError] = useState(null);
+  const [telegramExportDisplay, setTelegramExportDisplay] = useState(null);
+  const [savedDataDisplay, setSavedDataDisplay] = useState(null);
   const fileInputRef = useRef(null);
   const errorRef = useRef(null);
   
@@ -36,13 +39,18 @@ const Dropzone = ({ setParsedJson }) => {
         try {
             const parsedJson = JSON.parse(e.target?.result);
 
-            if (!parsedJson.chats || !parsedJson.chats.list) {
-                throw new Error("Invalid JSON format")
+            if (parsedJson.isTeleStatData) {
+              setSavedDataDisplay(`${file.name} (${convertSize(file.size)})`)
+              setSavedData(parseReviver(parsedJson))
+            } else if (!!parsedJson.chats && !!parsedJson.chats.list) {
+              setTelegramExportDisplay(`${file.name} (${convertSize(file.size)})`)
+              setTelegramExportData(parsedJson)
+            } else {
+              throw new Error("Invalid JSON format")
             }
-            
-            setParsedJson(parsedJson);
         } catch (err) {
-            setError("Invalid JSON format");
+          console.log(err)
+          setError("Invalid JSON format");
         }
       };
       reader.readAsText(file);
@@ -102,9 +110,13 @@ const Dropzone = ({ setParsedJson }) => {
         }}
       />
       <Typography variant="h6" color={colors.white} sx={{position: "relative"}}>
-          Click to select file from system <br></br>
-          or<br></br>
-          Drag and drop here
+          { telegramExportDisplay && `Telegram Data: ${telegramExportDisplay}`}<br></br>
+          { savedDataDisplay && `Prev. Saved Data: ${savedDataDisplay}`}
+          { (!telegramExportDisplay && !savedDataDisplay) && (<span>
+                Click to select file from system <br></br>
+                or<br></br>
+                Drag and drop here
+              </span>)}
       </Typography>
       <input
         type="file"
@@ -135,3 +147,20 @@ const Dropzone = ({ setParsedJson }) => {
 };
 
 export default Dropzone;
+
+function convertSize(sizeBytes, decimalBase = true) {
+  if (sizeBytes === 0) return "0 Bytes";
+
+  const base = decimalBase ? 1000 : 1024;
+  const suffixes = decimalBase
+      ? ["B", "KB", "MB", "GB", "TB", "PB"]
+      : ["B", "KiB", "MiB", "GiB", "TiB", "PiB"];
+
+  let i = 0;
+  while (sizeBytes >= base && i < suffixes.length - 1) {
+      sizeBytes /= base;
+      i++;
+  }
+
+  return `${sizeBytes.toFixed(2)} ${suffixes[i]}`;
+}

@@ -1,9 +1,10 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getMessageText } from './helper/GetMessageText';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getMessageText } from '../helper/GetMessageText';
 
 export const getWordCounts = async (
     data,
+    savedData,
     status_update_func
 ) => {
     const wordCount_from = await chunkedFunction(
@@ -53,6 +54,15 @@ export const getWordCounts = async (
         },
         (progress) => status_update_func(`Word count histogram`, progress)
     )
+
+    if (savedData) {
+        return [
+            wordCount_from + savedData.wordCount_from,
+            wordCount_to + savedData.wordCount_to,
+            wordCount_total + savedData.wordCount_total,
+            combineDictionary(wordCount_histogram, savedData.wordCount_histogram)
+        ]
+    }
 
     return [wordCount_from, wordCount_to, wordCount_total, wordCount_histogram];
 };
