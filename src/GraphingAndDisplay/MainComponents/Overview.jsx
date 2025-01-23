@@ -8,7 +8,7 @@ import Overview_Histograms from '../SubComponents/Overview_Histograms';
 const Overview = ({data}) => {
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2, bgcolor: "#111111" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2, bgcolor: colors.grey2}}>
 
       <Typography
         variant="h3"
@@ -19,7 +19,7 @@ const Overview = ({data}) => {
       </Typography>
       <Typography
         variant="body" 
-        sx = {{fontStyle: 'italic', color:'#19AC81'}}
+        sx = {{fontStyle: 'italic', color:colors.grey3}}
       >
         (Across the selected chats)
       </Typography>

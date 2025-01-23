@@ -63,7 +63,7 @@ const BigNumber = ({
             overflow: "clip"
         }}
       >
-        <Box component="span" sx={{ color: '#394d48' }}>
+        <Box component="span" sx={{ color: colors.numberPadding }}>
           {padding}
         </Box>
         <Box component="span" sx={{ color: number >= 0 ? numberColor : colors.secondary }}>

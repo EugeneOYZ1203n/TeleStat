@@ -7,6 +7,7 @@ import calendar from "../../assets/calendar-big-svgrepo-com.svg"
 import smile from "../../assets/smile-circle-svgrepo-com.svg"
 import sad from "../../assets/sad-circle-svgrepo-com.svg"
 import stopwatch from "../../assets/stopwatch-svgrepo-com.svg"
+import { colors } from '../../config';
 
 const BigOverviewCard = ({ 
     items,
@@ -25,7 +26,7 @@ const BigOverviewCard = ({
     const bigBoxWidth = 'calc(80% + 40px)'
     return (
         <Box sx={{
-            backgroundColor:'#101010',
+            backgroundColor:colors.grey1,
             border:'1px solid grey',
             width:bigBoxWidth, 
             display: 'flex', 
