@@ -37,9 +37,28 @@ Telestat is more than just a stats tool—it’s a fun and meaningful way to loo
     - (Future) Mutual groups count
 - (Future) Analyzes Group Chat data
 
+## Installation
+- Navigate into the directory where you wish to install Telestat
+- Open up the terminal and clone the repository from github
+``` bash
+git clone "https://github.com/EugeneOYZ1203n/TeleStat.git"
+```
+- Navigate into the newly downloaded "Telestat" folder 
+- Run "npm install" in the terminal to install missing dependencies
+``` bash
+npm install
+```
+- Run "npm run dev" in the terminal to host the app on your local browser
+``` bash
+npm run dev
+```
+- Press 'ctrl' and click on the link shown in the terminal window to launch the app
+- Follow the instructions as shown on the app to use it. Have fun!
 
 ## Authors
 
 - [@EugeneOYZ1203n](https://github.com/EugeneOYZ1203n)
 - [@Just-Chocomint](https://github.com/Just-Chocomint)
 - [@Albertd13](https://github.com/Albertd13)
+- [@Rhysmond](https://github.com/Rhysmond)
+
