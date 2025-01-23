@@ -1,7 +1,7 @@
-import { ldaFunc } from "./helper/lda";
-import { chunkedFunction } from "./ChunkedFunctions";
-import { combineDictionary } from "./helper/combineDictionary";
-import { getMessageText } from "./helper/GetMessageText";
+import { ldaFunc } from "../helper/lda";
+import { chunkedFunction } from "../ChunkedFunctions";
+import { combineDictionary } from "../helper/combineDictionary";
+import { getMessageText } from "../helper/GetMessageText";
 
 const extraStopwords = [
     "just","want","think","damn","need","when","time","first","back","maybe","going","nice",
@@ -30,6 +30,7 @@ const abbreviations = [
 
 export const getCommonWords = async (
     data,
+    savedData,
     status_update_func
 ) => {
 
@@ -70,11 +71,14 @@ export const getCommonWords = async (
         (progress) => status_update_func(`Abbreviations`, progress)
     )
 
-    const common10Abbreviations = Array.from(Object.entries(abbreviation_counts))
-                                    .sort((a, b) => b[1] - a[1])
-                                    .slice(0,9);
+    if (savedData) {
+        return [
+            savedData.keywords.concat(keywords),
+            combineDictionary(abbreviation_counts, savedData.abbreviation_counts)
+        ]
+    }
 
-    return [keywords, common10Abbreviations];
+    return [keywords, abbreviation_counts];
     // keywords is an array of strings, each representing the main keyword of each set of 100 messages
 };
 

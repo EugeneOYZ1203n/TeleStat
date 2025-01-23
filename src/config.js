@@ -13,3 +13,5 @@ export const colors = {
 }
 
 export const chunkSize = 50;
+
+export const exportDataVersion = "1";

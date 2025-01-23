@@ -1,6 +1,8 @@
-import { chunkedFunction } from './ChunkedFunctions';
-import { getMessageDate } from './helper/getMessageDate';
-import { getMessageText } from './helper/GetMessageText';
+import { get } from 'lodash';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionaryNoDuplicates } from '../helper/combineDictionary';
+import { getMessageDate } from '../helper/getMessageDate';
+import { getMessageText } from '../helper/GetMessageText';
 
 const funMilestoneNumbers = [69, 111, 123, 420, 666, 777, 888, 1010, 1234, 1337, 9001]
 /*
@@ -19,13 +21,17 @@ const funMilestoneNumbers = [69, 111, 123, 420, 666, 777, 888, 1010, 1234, 1337,
 
 export const getMilestoneMessages = async (
     data,
+    savedData,
     status_update_func
 ) => {
-    const max_index = data.messages.length
+    const shift = savedData ? savedData.messages_total : 0
+    const max_index = data.messages.length + shift
 
-    const funMilestoneMessages = funMilestoneNumbers.reduce((acc, el) => {
+    const funMilestoneMessages = funMilestoneNumbers
+        .filter(el=>el>=shift)
+        .reduce((acc, el) => {
         if (el <= max_index){
-            const message = data.messages[el-1]
+            const message = data.messages[el-shift-1]
             acc[`Msg No. ${el}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
@@ -36,9 +42,11 @@ export const getMilestoneMessages = async (
         return acc
     }, {})
 
-    const roundedMilestoneMessages = generateRoundedMilestones(max_index).reduce((acc, el) => {
+    const roundedMilestoneMessages = generateRoundedMilestones(max_index)
+        .filter(el=>el>=shift)
+        .reduce((acc, el) => {
         if (el <= max_index){
-            const message = data.messages[el-1]
+            const message = data.messages[el-shift-1]
             acc[`Msg No. ${el}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
@@ -49,9 +57,11 @@ export const getMilestoneMessages = async (
         return acc
     }, {})
 
-    const first20Messages = Array(20).fill(0).map((_, i) => i).reduce((acc, el) => {
+    const first20Messages = Array(20).fill(0).map((_, i) => i)
+        .filter(el=>el>=shift)
+        .reduce((acc, el) => {
         if (el <= max_index){
-            const message = data.messages[el]
+            const message = data.messages[el-shift]
             acc[`Msg No. ${el+1}`] = {
                 isFrom: message.from_id === `user${data.id}`,
                 username: message.from,
@@ -64,7 +74,7 @@ export const getMilestoneMessages = async (
 
     const longestMessage = {"Longest": await chunkedFunction(
         data.messages, {text: ""},
-        (a, b) => a.text.length > b.text.length ? a : b,
+        getLongerOfTwoText,
         (messages) => {
             return messages
                     .map((message) => {
@@ -75,13 +85,22 @@ export const getMilestoneMessages = async (
                             text: getMessageText(message)
                         }
                     })
-                    .reduce((longest, current) => 
-                        current.text.length > longest.text.length ? current : longest, 
+                    .reduce( 
+                        getLongerOfTwoText, 
                         {text: ""}
                     );
         },
         (progress) => status_update_func(`Longest message`, progress)
     )};
+
+    if (savedData) {
+        return [
+            combineDictionaryNoDuplicates(savedData.funMilestoneMessages, funMilestoneMessages),
+            combineDictionaryNoDuplicates(savedData.roundedMilestoneMessages, roundedMilestoneMessages),
+            combineDictionaryNoDuplicates(savedData.first20Messages, first20Messages),
+            {"Longest": getLongerOfTwoText(savedData.longestMessage["Longest"], longestMessage["Longest"])}
+        ]
+    }
 
     return [funMilestoneMessages, roundedMilestoneMessages, first20Messages, longestMessage]
 };
@@ -97,3 +116,7 @@ const generateRoundedMilestones = (max) => {
   
     return milestones;
   }
+
+const getLongerOfTwoText = (a, b) => {
+    return a.text.length > b.text.length ? a : b
+}

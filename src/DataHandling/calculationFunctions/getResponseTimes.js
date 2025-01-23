@@ -1,11 +1,13 @@
-import { calculateMedian } from './helper/calculateMedian';
-import { chunkedFunction } from './ChunkedFunctions';
-import { combineDictionary } from './helper/combineDictionary';
-import { getDifferenceInSeconds } from './helper/getDifferenceInDays';
-import { getMessageDate } from './helper/getMessageDate';
+import { calculateMedian } from '../helper/calculateMedian';
+import { chunkedFunction } from '../ChunkedFunctions';
+import { combineDictionary } from '../helper/combineDictionary';
+import { getDifferenceInSeconds } from '../helper/getDifferenceInDays';
+import { getMessageDate } from '../helper/getMessageDate';
+import { estimateOverallMedian } from '../helper/estimateOverallMedian';
 
 export const getResponseTimes = async (
     data,
+    savedData,
     status_update_func
 ) => {
     let prevDate = getMessageDate(data.messages[0])
@@ -75,6 +77,25 @@ export const getResponseTimes = async (
         },
         (progress) => status_update_func(`Response time to histogram`, progress)
     )
+
+    if (savedData) {
+        return [
+            responseCount_from + savedData.responseCount_from,
+            responseCount_to + savedData.responseCount_to,
+            (avgResponseTime_from*responseCount_from + savedData.avgResponseTime_from*savedData.responseCount_from)
+                / (responseCount_from + savedData.responseCount_from),
+            (avgResponseTime_to*responseCount_to + savedData.avgResponseTime_to*savedData.responseCount_to)
+                / (responseCount_to + savedData.responseCount_to),
+            estimateOverallMedian(
+                [medianResponseTime_from, savedData.medianResponseTime_from],
+                [responseCount_from, savedData.responseCount_from]),
+            estimateOverallMedian(
+                [medianResponseTime_to, savedData.medianResponseTime_to],
+                [responseCount_to, savedData.responseCount_to]),  
+            combineDictionary(responseTime_from_histogram, savedData.responseTime_from_histogram),
+            combineDictionary(responseTime_to_histogram, savedData.responseTime_to_histogram)
+        ]
+    }
 
     return [responseCount_from, responseCount_to, avgResponseTime_from, avgResponseTime_to, 
         medianResponseTime_from, medianResponseTime_to, responseTime_from_histogram, responseTime_to_histogram];

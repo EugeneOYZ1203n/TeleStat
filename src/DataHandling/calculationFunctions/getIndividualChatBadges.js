@@ -1,4 +1,4 @@
-import { getDifferenceInDays } from "./helper/getDifferenceInDays"
+import { getDifferenceInDays } from "../helper/getDifferenceInDays"
 import * as ss from 'simple-statistics'; //Old library, requires special import
 
 export const getIndividualChatBadges = (

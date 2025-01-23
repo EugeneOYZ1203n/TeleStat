@@ -1,3 +1,4 @@
+import { exportDataVersion } from '../config.js';
 import { calculateStatsOfChat } from './calculateStatsOfChat.js';
 import { combineDictionary } from './helper/combineDictionary.js';
 import { estimateOverallMedian } from './helper/estimateOverallMedian.js';
@@ -5,18 +6,23 @@ import { getDifferenceInDays } from './helper/getDifferenceInDays.js';
 
 export const calculateStats = async (
     data, 
-    numChats = 3,
+    options,
+    selectedChats,
+    savedData,
     status_update_func,
     increment_progress_func
 ) => {
     const individualStats = []
     let index = 0;
 
-    const sorted_data = data.toSorted((a,b) => b.messages.length - a.messages.length).slice(0,numChats)
+    const filtered_data = data.filter((el) => (selectedChats.includes(el.name)))
+
+    const filtered_savedData = savedData ? filtered_data.map((el) => savedData.chats.find(chat=>el.name === chat.name)) : null
     
-    for (const chat_data of sorted_data) {
+    for (let i = 0; i < filtered_data.length; i++ ) {
+        const chat_data = filtered_data[i]
         const val = await calculateStatsOfChat(
-            chat_data, status_update_func, 
+            chat_data, (savedData ? filtered_savedData[i] : null), status_update_func, 
             () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, index)
         )
         if (val) { individualStats.push(val); }

@@ -37,7 +37,7 @@ const OptionsTab = ({options, setOptions}) => {
 
   return (
         
-    <Box width={"85%"} m={"auto"} color={colors.white}>
+    <Box width={"85%"} m={"auto"} mt={8} color={colors.white}>
         <Typography variant="h6">Options</Typography>
         <Box textAlign={"left"}>
         <Typography variant="body1" gutterBottom>
