@@ -21,6 +21,7 @@ export const calculateStats = async (
     
     for (let i = 0; i < filtered_data.length; i++ ) {
         const chat_data = filtered_data[i]
+        chat_data.messages = chat_data.messages.filter((el) => (el.type == "message"))
         const val = await calculateStatsOfChat(
             chat_data, (savedData ? filtered_savedData[i] : null), status_update_func, 
             () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, index)
