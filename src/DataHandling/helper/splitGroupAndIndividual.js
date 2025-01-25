@@ -12,7 +12,7 @@ function splitByPredicate(array, predicate) {
     );
 }
 
+// returns [personal_chat_data, group_chat_data]
 export const splitGroupAndIndividual = (data) => {
-    // returns [personal_chat_data, group_chat_data]
     return splitByPredicate(data, el => el.type === "personal_chat")
 }
