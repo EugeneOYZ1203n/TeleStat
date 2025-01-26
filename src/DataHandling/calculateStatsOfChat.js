@@ -19,11 +19,11 @@ export const calculateStatsOfChat = async (
     status_update_func,
     increment_progress_func
 ) => {
-    await setTimeout(increment_progress_func, 100);
+    setTimeout(increment_progress_func, 100);
 
-    const [firstDateMessaged, lastDateMessaged] = [getMessageDate(data.messages[0]), getMessageDate(data.messages[data.messages.length - 1])];
-    const daysBetweenFirstAndLastMessage = getDifferenceInDays(firstDateMessaged, lastDateMessaged);
-    const daysSinceLastMessaged = getDifferenceInDays(lastDateMessaged, new Date());
+    if (data.name === "Telegram") {
+        return null;
+    }
 
     if (savedData) {
         const index = data.messages.findIndex(message => message.id === savedData.last_message_id)
@@ -34,10 +34,10 @@ export const calculateStatsOfChat = async (
             return savedData;
         }
     }
-
-    if (data.name === "Telegram") {
-        return null;
-    }
+    
+    const [firstDateMessaged, lastDateMessaged] = [getMessageDate(data.messages[0]), getMessageDate(data.messages[data.messages.length - 1])];
+    const daysBetweenFirstAndLastMessage = getDifferenceInDays(firstDateMessaged, lastDateMessaged);
+    const daysSinceLastMessaged = getDifferenceInDays(lastDateMessaged, new Date());
 
     const last_message_id = data.messages.slice(-1)[0].id;
 

@@ -3,6 +3,9 @@ import { calculateStatsOfChat } from './calculateStatsOfChat.js';
 import { combineDictionary } from './helper/combineDictionary.js';
 import { estimateOverallMedian } from './helper/estimateOverallMedian.js';
 import { getDifferenceInDays } from './helper/getDifferenceInDays.js';
+import { splitGroupAndIndividual } from './helper/splitGroupAndIndividual.js';
+import { filterServiceMessages } from './helper/filterServiceMessages.js';
+import { calculateStatsOfGroupChat } from './calculateStatsOfGroupChat.js';
 
 export const calculateStats = async (
     data, 
@@ -12,22 +15,30 @@ export const calculateStats = async (
     status_update_func,
     increment_progress_func
 ) => {
-    const individualStats = []
-    let index = 0;
-
-    const filtered_data = data.filter((el) => (selectedChats.includes(el.name)))
-
+    const filtered_data = filterServiceMessages(
+        data.filter((el) => (selectedChats.includes(el.name)))
+    )
     const filtered_savedData = savedData ? filtered_data.map((el) => savedData.chats.find(chat=>el.name === chat.name)) : null
-    
-    for (let i = 0; i < filtered_data.length; i++ ) {
-        const chat_data = filtered_data[i]
-        chat_data.messages = chat_data.messages.filter((el) => (el.type == "message"))
+    const [personal_chatData, group_chatData] = splitGroupAndIndividual(filtered_data)
+    // console.log(group_chatData)
+
+    const individualStats = []
+    const groupStats = []
+    for (let i = 0; i < personal_chatData.length; i++ ) {
+        const chat_data = personal_chatData[i]
         const val = await calculateStatsOfChat(
             chat_data, (savedData ? filtered_savedData[i] : null), status_update_func, 
-            () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, index)
+            () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, i)
         )
-        if (val) { individualStats.push(val); }
-        index += 1;
+        if (val) { individualStats.push(val) }
+    }
+    for (let i = 0; i < group_chatData.length; i++) {
+        const chat_data = group_chatData[i]
+        const val = await calculateStatsOfGroupChat(
+            chat_data, (savedData ? filtered_savedData[i] : null), status_update_func,
+            () => increment_progress_func(`Calculating stats for ${chat_data.name} (${chat_data.messages.length} messages)`, i)
+        )
+        if (val) { groupStats.push(val) }
     }
 
     const messages_sent = individualStats.reduce((acc,el) => acc + el.messages_to, 0)
@@ -67,7 +78,8 @@ export const calculateStats = async (
             hours_active, daysOfWeek_active, month_active,
             avgResponseTime, medianResponseTime
         },
-        chats: individualStats
+        chats: individualStats,
+        groupChats: groupStats
     }
 }
 
