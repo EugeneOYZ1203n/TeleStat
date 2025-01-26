@@ -40,7 +40,6 @@ export const getGroupMessageCounts = async (
         },
         (progress) => status_update_func(`Daily messages`, progress)
     );    
-    console.log(messagesByEach)
     return [messagesByEach, messages_total, messages_daily];
 };
 
