@@ -78,7 +78,8 @@ export const calculateStats = async (
             hours_active, daysOfWeek_active, month_active,
             avgResponseTime, medianResponseTime
         },
-        chats: individualStats
+        chats: individualStats,
+        groupChats: groupStats
     }
 }
 
