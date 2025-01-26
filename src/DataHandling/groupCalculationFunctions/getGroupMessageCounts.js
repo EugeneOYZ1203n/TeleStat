@@ -2,6 +2,7 @@ import { chunkedFunction } from '../ChunkedFunctions';
 import { combineDictionary } from '../helper/combineDictionary';
 import { getDateString } from '../helper/getDateString';
 import { getMessageDate } from '../helper/getMessageDate';
+import { getEachAndTotalStats } from './getEachAndTotalStats';
 import { getUserIdentifier } from './getUserIdentifier';
 
 export const getGroupMessageCounts = async (
@@ -9,23 +10,13 @@ export const getGroupMessageCounts = async (
     savedData,
     status_update_func
 ) => {
-    
-    // can change this to directly update an object instead of combining dict through accumulator
-    const messagesByEach = await chunkedFunction(
-        data.messages, {},
-        combineDictionary,
-        (messages) => {
-            const result = {}
-            messages.forEach((message) => {
-                const key = getUserIdentifier(message.from_id, message.from)
-                result[key] = (result[key] || 0) + 1
-            })
-            return result
-        },
-        (progress) => status_update_func(`Number of messages in group`, progress)
-    );
-
-    const messages_total = Object.values(messagesByEach).reduce((a, b) => a + b, 0)
+    const [messagesByEach, messages_total] = await getEachAndTotalStats(
+        data, 
+        savedData,
+        (progress) => status_update_func(`Number of messages in group`, progress),
+        (message) => getUserIdentifier(message.from_id, message.from),
+        (_) => 1
+    )
 
     const messages_daily = await chunkedFunction(
         data.messages, {},
