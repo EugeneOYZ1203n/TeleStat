@@ -7,6 +7,7 @@ import calendar from "../../assets/calendar-big-svgrepo-com.svg"
 import smile from "../../assets/smile-circle-svgrepo-com.svg"
 import sad from "../../assets/sad-circle-svgrepo-com.svg"
 import stopwatch from "../../assets/stopwatch-svgrepo-com.svg"
+import day from "../../assets/day-sunny-svgrepo-com.svg"
 import { colors } from '../../config';
 
 const SmallOverviewCard = ({ 
@@ -21,8 +22,9 @@ const SmallOverviewCard = ({
         'smile':smile,
         'sad':sad,
         'stopwatch':stopwatch,
+        'day':day
     }
-    const smallBoxWidth = '40%'
+    const smallBoxWidth = '100%'
     return (
         <Box sx={{
             backgroundColor:colors.grey1,
@@ -31,7 +33,8 @@ const SmallOverviewCard = ({
             display: 'flex', // Use flex for horizontal alignment
             alignItems: 'center',
             justifyContent:'center',
-            padding:"20px"
+            padding:"20px",
+            height:"100%"
             }}
         >
             <img 

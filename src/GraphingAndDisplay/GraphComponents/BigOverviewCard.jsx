@@ -7,6 +7,7 @@ import calendar from "../../assets/calendar-big-svgrepo-com.svg"
 import smile from "../../assets/smile-circle-svgrepo-com.svg"
 import sad from "../../assets/sad-circle-svgrepo-com.svg"
 import stopwatch from "../../assets/stopwatch-svgrepo-com.svg"
+import day from "../../assets/day-sunny-svgrepo-com.svg"
 import { colors } from '../../config';
 
 const BigOverviewCard = ({ 
@@ -22,6 +23,7 @@ const BigOverviewCard = ({
         'smile':smile,
         'sad':sad,
         'stopwatch':stopwatch,
+        'day':day
     }
     const bigBoxWidth = 'calc(80% + 40px)'
     return (
