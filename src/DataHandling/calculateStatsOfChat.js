@@ -19,7 +19,7 @@ export const calculateStatsOfChat = async (
     status_update_func,
     increment_progress_func
 ) => {
-    await setTimeout(increment_progress_func, 100);
+    setTimeout(increment_progress_func, 100);
 
     const [firstDateMessaged, lastDateMessaged] = [getMessageDate(data.messages[0]), getMessageDate(data.messages[data.messages.length - 1])];
     const daysBetweenFirstAndLastMessage = getDifferenceInDays(firstDateMessaged, lastDateMessaged);
